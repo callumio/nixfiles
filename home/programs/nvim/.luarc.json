@@ -1,0 +1,6 @@
+{
+    "diagnostics.globals": [
+        "vim",
+				"lsp_on_attach"
+    ]
+}

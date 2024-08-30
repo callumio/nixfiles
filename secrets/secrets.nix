@@ -6,5 +6,5 @@ let
   };
   allSystems = builtins.attrValues systems;
 in {
-  "wg-conf.age".publicKeys = keys.c ++ [systems.hermes];
+  "wg-conf.age".publicKeys = keys.c ++ allSystems;
 }

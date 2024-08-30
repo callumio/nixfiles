@@ -1,6 +1,6 @@
 {utils}: let
   hosts = utils.lib.exportModules [
-    #   ./artemis
+    ./artemis
     ./hermes
   ];
 in {inherit hosts;}

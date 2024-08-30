@@ -27,6 +27,8 @@ in {
     ];
   };
 
+  nix.settings.trusted-users = ["media"];
+
   environment.systemPackages = with pkgs; [
     wget
     tree

@@ -35,10 +35,20 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "unstable";
+      inputs.home-manager.follows = "home-manager";
+    };
     #omnix-flake.url = "github:juspay/omnix?dir=nix/om";
 
     disko = {
       url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -91,7 +101,7 @@
           nur.overlay
         ];
 
-        hostDefaults.modules = [home-manager.nixosModules.home-manager inputs.agenix.nixosModules.default] ++ mods.sharedModules;
+        hostDefaults.modules = [home-manager.nixosModules.home-manager inputs.stylix.nixosModules.stylix inputs.agenix.nixosModules.default] ++ mods.sharedModules;
 
         hostDefaults.extraArgs = {
           inherit inputs;

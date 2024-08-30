@@ -4,8 +4,8 @@
   pkgs,
   ...
 }: {
-  networking.hostName = "hermes";
   networking = {
+    hostName = "hermes";
     enableIPv6 = false;
     firewall.allowedTCPPorts = [80 443 8265];
     firewall.checkReversePath = false;

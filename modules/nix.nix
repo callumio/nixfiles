@@ -1,5 +1,10 @@
 {
   nix = {
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
     extraOptions = "gc-keep-outputs = true";
     settings = {
       experimental-features = ["nix-command" "flakes"];
