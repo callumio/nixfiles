@@ -18,5 +18,6 @@ jobs:
         with:
           name: callumio-public
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          pushFilter: '(nerdfonts)'
           extraPullNames: nix-community, om
       - run: nix run github:juspay/omnix -- ci run "."
