@@ -67,7 +67,7 @@
   } @ inputs: let
     inherit (utils.lib) mkApp;
     mods = import ./modules {inherit utils;};
-    hosts = import ./hosts {inherit utils;};
+    hosts = import ./hosts {inherit inputs utils;};
     overlay = import ./overlays {inherit inputs;};
   in
     with mods.nixosModules;

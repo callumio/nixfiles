@@ -7,4 +7,6 @@ let
   allSystems = builtins.attrValues systems;
 in {
   "wg-conf.age".publicKeys = keys.c ++ allSystems;
+  "mesh-conf-infra.age".publicKeys = keys.c ++ allSystems;
+  "mesh-conf-cleslie.age".publicKeys = keys.c ++ allSystems;
 }

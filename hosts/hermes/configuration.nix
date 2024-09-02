@@ -7,7 +7,13 @@
 }: let
   inherit (inputs.self.nixosModules) keys;
 in {
-  services.remote-deploy = {
+  c.services.mesh = {
+    enable = true;
+    exitNode = true;
+    keyFile = config.age.secrets.mesh-conf-infra.path;
+  };
+
+  c.services.remote-deploy = {
     enable = true;
     host = "media.cleslie.uk";
     port = 62480;

@@ -5,9 +5,9 @@
   ...
 }:
 with lib; let
-  cfg = config.services.remote-deploy;
+  cfg = config.c.services.remote-deploy;
 in {
-  options.services.remote-deploy = {
+  options.c.services.remote-deploy = {
     enable = mkEnableOption "Enable remote deployment with nixinate.";
     host = mkOption {
       type = types.str;

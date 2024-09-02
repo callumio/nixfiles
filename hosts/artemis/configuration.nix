@@ -1,11 +1,17 @@
 {
+  config,
   pkgs,
   inputs,
   ...
 }: let
   inherit (inputs.self.nixosModules) keys;
 in {
-  services.remote-deploy = {
+  c.services.mesh = {
+    enable = true;
+    exitNode = false;
+    keyFile = config.age.secrets.mesh-conf-cleslie.path;
+  };
+  c.services.remote-deploy = {
     enable = false;
     keys = keys.c;
   };

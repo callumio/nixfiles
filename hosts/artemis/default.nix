@@ -1,4 +1,4 @@
-{
+{inputs}: {
   modules = [
     ./hardware-configuration.nix
     ./configuration.nix

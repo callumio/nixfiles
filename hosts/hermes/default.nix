@@ -1,4 +1,4 @@
-{
+{inputs}: {
   modules = [
     ./hardware-configuration.nix
     ./configuration.nix
@@ -7,6 +7,7 @@
     ./networking.nix
     ./ssh.nix
     ./media.nix
+    ./headscale.nix
   ];
   extraArgs = {};
   specialArgs = {};
