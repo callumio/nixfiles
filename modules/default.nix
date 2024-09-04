@@ -1,6 +1,7 @@
 {utils}: let
   nixosModules = utils.lib.exportModules [
     ./nix.nix
+    ./pinentry-fix.nix
     ./hm.nix
     ./boot.nix
     ./deploy.nix
@@ -8,7 +9,11 @@
     ./secret.nix
     ./tailscale.nix
   ];
+  homeManagerModules = utils.lib.exportModules [
+    ./trayscale.nix
+  ];
   sharedModules = with nixosModules; [
+    pinentry-fix
     nix
     hm
     boot
@@ -16,4 +21,6 @@
     tailscale
     secret
   ];
-in {inherit nixosModules sharedModules;}
+in {
+  inherit nixosModules homeManagerModules sharedModules;
+}

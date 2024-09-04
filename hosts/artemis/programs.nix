@@ -4,8 +4,29 @@
     seahorse.enable = true;
     nix-ld.enable = true;
     virt-manager.enable = true;
-    nm-applet.enable = true;
+    #nm-applet.enable = true;
     hyprland.enable = true;
+
+    regreet = {
+      enable = true;
+      settings = {
+        background = {
+          path = pkgs.fetchurl {
+            url = "https://i.redd.it/jd1nuwsl0d121.jpg";
+            sha256 = "sha256-ff3ajGVsay2dtHiHmO2MYlqCvexUQjGifMs/ofzuyvI=";
+          };
+          fit = "Contain";
+        };
+        GTK = {
+          application_prefer_dark_theme = true;
+          cursor_theme_name = "Adwaita";
+          font_name = "Cantarell 16";
+          icon_theme_name = "Adwaita";
+          theme_name = "Adwaita";
+        };
+      };
+      cageArgs = ["-s" "-m" "last"];
+    };
   };
   services = {
     mullvad-vpn = {
@@ -29,17 +50,7 @@
     };
 
     thermald.enable = true;
-    greetd = {
-      enable = true;
-      settings = {
-        default_session.command = ''
-          ${pkgs.greetd.tuigreet}/bin/tuigreet \
-            --time \
-            --asterisks \
-            --user-menu \
-            --cmd Hyprland
-        '';
-      };
-    };
+
+    greetd.enable = true;
   };
 }

@@ -67,11 +67,7 @@ in {
           reverse_proxy /lidarr/* 127.0.0.1:8686
           reverse_proxy /bazarr/* 127.0.0.1:6767
           reverse_proxy /prowlarr/* 127.0.0.1:9696
-          reverse_proxy /tdarr/* http://127.0.0.1:8265  {
-              header_up Host {host}
-              header_up X-Real-IP {remote}
-              header_up X-Forwarded-For {remote}
-          }
+          reverse_proxy /tdarr/* 127.0.0.1:8265
           route /deluge/* {
           	uri strip_prefix deluge
           	reverse_proxy 127.0.0.1:8112 {
@@ -88,10 +84,6 @@ in {
           reverse_proxy http://localhost:5055
         '';
       };
-    };
-
-    homepage-dashboard = {
-      enable = false;
     };
 
     jellyfin = {

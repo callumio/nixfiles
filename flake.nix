@@ -73,7 +73,7 @@
     with mods.nixosModules;
       utils.lib.mkFlake {
         inherit self inputs;
-        inherit (mods) nixosModules;
+        inherit (mods) homeManagerModules nixosModules;
         inherit (hosts) hosts;
         supportedSystems = ["x86_64-linux" "aarch64-linux"];
         channelsConfig.allowUnfree = true;

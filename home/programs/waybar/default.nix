@@ -10,7 +10,7 @@
       hyprlandSupport = true;
       swaySupport = false;
     };
-    systemd.enable = false;
+    systemd.enable = true;
     settings = {
       mainBar = {
         layer = "top";
@@ -58,7 +58,7 @@
           tooltip = false;
         };
         temperature = {
-          thermal-zone = 0;
+          thermal-zone = 5;
           format = "{icon} {temperatureC}°C";
           format-icons = [""];
           interval = 30;

@@ -31,6 +31,7 @@ in {
 
   environment.systemPackages = with pkgs; [
     vim
+    gnome.adwaita-icon-theme
     wget
     fzf
     nil
@@ -45,9 +46,9 @@ in {
 
     shells = with pkgs; [fish];
 
-    etc."greetd/environments".text = ''
-      hyprland
-    '';
+    # etc."greetd/environments".text = ''
+    #   hyprland
+    # '';
   };
   fonts.packages = with pkgs; [nerdfonts meslo-lgs-nf];
 }
