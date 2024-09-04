@@ -7,20 +7,26 @@
   imports = [./programs ./services];
 
   programs.home-manager.enable = true;
+  services.trayscale.enable = true;
 
   home = {
     username = "c";
     homeDirectory = "/home/c";
   };
+  gtk.enable = true;
+  gtk.iconTheme = {
+    package = pkgs.gnome.adwaita-icon-theme;
+    name = "Adwaita";
+  };
 
   home.packages = with pkgs; [
+    gnome.adwaita-icon-theme
+    networkmanagerapplet
     libsecret
     bitwarden
     betterbird
     wl-clipboard
-    (discord.override {
-      withOpenASAR = true;
-    })
+    discord
     brightnessctl
     playerctl
     pwvucontrol

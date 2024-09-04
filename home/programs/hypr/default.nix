@@ -4,6 +4,67 @@
   pkgs,
   ...
 }: {
+  services = {
+    blueman-applet.enable = true;
+    network-manager-applet.enable = true;
+    udiskie = {
+      enable = true;
+      tray = "auto";
+    };
+  };
+  programs.hyprlock = {
+    enable = true;
+    settings = {
+      background = [
+        {
+          path = "screenshot";
+          blur_passes = 3;
+          blur_size = 8;
+        }
+      ];
+      label = [
+        {
+          monitor = "";
+          text = "$TIME";
+          text_align = "center";
+          color = "rgba(200, 200, 200, 1.0)";
+          font_size = 40;
+          font_family = "Noto Sans";
+          rotate = 0;
+          position = "0, 200";
+          halign = "center";
+          valign = "center";
+        }
+        {
+          monitor = "";
+          text = "Hi there, $USER";
+          text_align = "center";
+          color = "rgba(200, 200, 200, 1.0)";
+          font_size = 25;
+          font_family = "Noto Sans";
+          rotate = 0;
+          position = "0, 80";
+          halign = "center";
+          valign = "center";
+        }
+      ];
+      input-field = [
+        {
+          size = "200, 50";
+          position = "0, -80";
+          monitor = "";
+          dots_center = true;
+          fade_on_empty = false;
+          font_color = "rgb(202, 211, 245)";
+          inner_color = "rgb(91, 96, 120)";
+          outer_color = "rgb(24, 25, 38)";
+          outline_thickness = 5;
+          placeholder_text = "Password...";
+          shadow_passes = 2;
+        }
+      ];
+    };
+  };
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = true;
@@ -117,18 +178,17 @@
           "$mainMod SHIFT, j, movewindow, d"
           ''SHIFT, Print, exec, grim -g "$(slurp)" - | wl-copy''
           ", Print, exec, grim - | wl-copy"
+          "$mainMod, 0, exec, hyprlock"
         ]
         ++ (builtins.concatLists (builtins.genList (x: let
-            ws = let c = (x + 1) / 10; in builtins.toString (x + 1 - (c * 10));
+            ws = x + 1;
           in [
-            "$mainMod, ${ws}, workspace, ${toString (x + 1)}"
-            "$mainMod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
-            "$mainMod CTRL, ${ws}, moveworkspacetomonitor, ${
-              toString (x + 1)
-            } current"
-            "$mainMod CTRL, ${ws}, workspace, ${toString (x + 1)}"
+            "$mainMod, ${toString ws}, workspace, ${toString ws}"
+            "$mainMod SHIFT, ${toString ws}, movetoworkspace, ${toString ws}"
+            "$mainMod CTRL, ${toString ws}, moveworkspacetomonitor, ${toString ws} current"
+            "$mainMod CTRL, ${toString ws}, workspace, ${toString ws}"
           ])
-          10));
+          9));
 
       workspace = [
         "name:web, on-created-empty: firefox"
@@ -156,12 +216,12 @@
       ];
 
       exec = [
-        "pkill wpaperd & sleep 0.5 && wpaperd"
-        "pkill waybar & sleep 0.5 && waybar"
-        "pkill mako & sleep 0.5 && mako"
+        #"pkill wpaperd & sleep 0.5 && wpaperd"
+        #"pkill waybar & sleep 0.5 && waybar"
+        #"pkill mako & sleep 0.5 && mako"
       ];
 
-      exec-once = ["blueman-tray" "mullvad-gui" "udiskie -t"];
+      exec-once = ["mullvad-gui"];
     };
   };
 }
