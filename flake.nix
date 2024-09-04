@@ -53,6 +53,14 @@
     };
 
     nur.url = "github:nix-community/NUR";
+    pre-commit-hooks = {
+      url = "github:cachix/pre-commit-hooks.nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-compat.follows = "flake-compat";
+      };
+    };
+    flake-compat.url = "github:edolstra/flake-compat";
   };
 
   outputs = {
