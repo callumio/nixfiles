@@ -1,6 +1,5 @@
 {
   inputs,
-  utils,
   mods,
   self,
   ...
