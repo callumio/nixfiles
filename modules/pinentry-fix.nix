@@ -1,8 +1,3 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   services.dbus.packages = [pkgs.gcr];
 }
