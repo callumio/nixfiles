@@ -1,13 +1,13 @@
-{utils}: let
+{utils, ...}: let
   nixosModules = utils.lib.exportModules [
     ./nix.nix
     ./pinentry-fix.nix
     ./hm.nix
     ./boot.nix
-    ./deploy.nix
     ./keys.nix
-    ./secret.nix
+    ./deploy.nix
     ./tailscale.nix
+    ./secret.nix
   ];
   homeManagerModules = utils.lib.exportModules [
     ./trayscale.nix
@@ -17,6 +17,7 @@
     nix
     hm
     boot
+    keys
     deploy
     tailscale
     secret

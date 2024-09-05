@@ -3,10 +3,12 @@
   lib,
   pkgs,
   inputs,
+  self,
   ...
 }: let
-  inherit (inputs.self.nixosModules) keys;
+  #inherit (self.nixosModules) keys;
 in {
+  nixpkgs.hostPlatform = "x86_64-linux";
   c.services.mesh = {
     enable = true;
     exitNode = true;
@@ -17,7 +19,7 @@ in {
     enable = true;
     host = "media.cleslie.uk";
     port = 62480;
-    keys = keys.c;
+    keys = config.keys.c;
     buildOn = "local";
   };
 
@@ -26,7 +28,7 @@ in {
   users.users.media = {
     isNormalUser = true;
     extraGroups = ["wheel" "multimedia"];
-    openssh.authorizedKeys.keys = keys.c;
+    openssh.authorizedKeys.keys = config.keys.c;
     packages = with pkgs; [
       tree
       nixvim

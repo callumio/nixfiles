@@ -2,10 +2,12 @@
   config,
   pkgs,
   inputs,
+  self,
   ...
 }: let
-  inherit (inputs.self.nixosModules) keys;
+  #inherit (self.nixosModules) keys;
 in {
+  nixpkgs.hostPlatform = "x86_64-linux";
   c.services.mesh = {
     enable = true;
     exitNode = false;
@@ -13,7 +15,7 @@ in {
   };
   c.services.remote-deploy = {
     enable = false;
-    keys = keys.c;
+    keys = config.keys.c;
   };
 
   time.timeZone = "Europe/London";
@@ -22,7 +24,7 @@ in {
   users.users.c = {
     isNormalUser = true;
     extraGroups = ["wheel" "networkmanager" "libvirtd" "dialout"];
-    openssh.authorizedKeys.keys = keys.c;
+    openssh.authorizedKeys.keys = config.keys.c;
     shell = pkgs.fish;
     packages = with pkgs; [];
   };
