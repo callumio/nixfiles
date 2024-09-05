@@ -55,12 +55,16 @@
         _module.args.pkgs = inputs'.nixpkgs.legacyPackages.extend self.overlays.default;
         overlayAttrs = config.packages // {unstable = inputs.unstable.legacyPackages.${system};};
 
-        pre-commit.check.enable = false;
-        pre-commit.settings.hooks.alejandra.enable = true;
+        pre-commit = {
+          check.enable = false;
+          settings.hooks.alejandra.enable = true;
+          settings.hooks.deadnix.enable = true;
+        };
 
         treefmt.config = {
           projectRootFile = "flake.nix";
           programs.alejandra.enable = true;
+          programs.deadnix.enable = true;
         };
 
         devShells.default = final.mkShell {
