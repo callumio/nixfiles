@@ -1,4 +1,4 @@
-{config, ...}: {
+{...}: {
   networking = {
     hostName = "artemis";
     networkmanager.enable = true;

@@ -1,13 +1,8 @@
 {
   config,
-  lib,
   pkgs,
-  inputs,
-  self,
   ...
-}: let
-  #inherit (self.nixosModules) keys;
-in {
+}: {
   nixpkgs.hostPlatform = "x86_64-linux";
   c.services.mesh = {
     enable = true;

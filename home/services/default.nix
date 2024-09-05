@@ -1,9 +1,4 @@
-{
-  inputs,
-  config,
-  pkgs,
-  ...
-}: {
+{...}: {
   imports = [./mako];
   services = {
     network-manager-applet.enable = true;

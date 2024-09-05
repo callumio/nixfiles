@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: {
+{config, ...}: {
   networking = {
     hostName = "hermes";
     enableIPv6 = false;
