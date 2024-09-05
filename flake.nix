@@ -61,9 +61,9 @@
     };
     flake-compat.url = "github:edolstra/flake-compat";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    # systems.url = "github:nix-systems/default";
-    # systems.url = "github:nix-systems/default-linux";
-    systems.url = "github:nix-systems/x86_64-linux";
+    systems.url = "github:nix-systems/default";
+    #systems.url = "github:nix-systems/default-linux";
+    #systems.url = "github:nix-systems/x86_64-linux";
     treefmt-nix.url = "github:numtide/treefmt-nix";
   };
 
@@ -77,10 +77,7 @@
     home-manager,
     ...
   } @ inputs: let
-    inherit (utils.lib) mkApp;
     mods = import ./modules {inherit utils;};
-    #_nixosConfigurations = import ./hosts {inherit inputs utils mods self;};
-    overlay = import ./overlays {inherit inputs;};
     mkLinuxSystem = mod:
       nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs;};
