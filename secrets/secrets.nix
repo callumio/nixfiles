@@ -1,5 +1,5 @@
 let
-  keys = import ../modules/keys.nix;
+  keys = import ../lib/keys.nix;
   systems = {
     hermes = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILnmnOWpdewwytd15JcnJvJWbIE8hcMu/pp1TPqsvdol";
     artemis = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILERlCL5ZwP/mmtBNAMtLrUwEDy+tOprUWUmsGBRlTCF";

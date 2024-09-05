@@ -1,5 +1,5 @@
-{inputs}: {
-  modules = [
+{inputs, ...}: {
+  imports = [
     ./hardware-configuration.nix
     ./configuration.nix
     ./fail2ban.nix
@@ -9,8 +9,4 @@
     ./media.nix
     ./headscale.nix
   ];
-  extraArgs = {};
-  specialArgs = {};
-  system = "x86_64-linux";
-  channelName = "unstable";
 }
