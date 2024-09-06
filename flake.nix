@@ -48,13 +48,11 @@
         config,
         pkgs,
         final,
-        system,
         inputs',
-        #self',
         ...
       }: {
         _module.args.pkgs = inputs'.nixpkgs.legacyPackages.extend self.overlays.default;
-        overlayAttrs = config.packages // {unstable = inputs.unstable.legacyPackages.${system};};
+        overlayAttrs = config.packages // {unstable = inputs'.unstable.legacyPackages;};
 
         pre-commit = {
           check.enable = false;
@@ -74,12 +72,12 @@
           packages = with final; [just git nixvim cachix jq devour-flake om agenix deadnix];
         };
 
-        apps = nixpkgs.lib.mapAttrs' (name: value: nixpkgs.lib.nameValuePair ("deploy-" + name) value) (inputs.nixinate.nixinate.${system} self).nixinate;
+        apps = nixpkgs.lib.mapAttrs' (name: value: nixpkgs.lib.nameValuePair ("deploy-" + name) value) (inputs'.nixinate.packages self);
 
         packages = {
-          om = inputs.omnix.packages.${system}.default;
-          nixvim = inputs.nixvim.packages.${system}.default;
-          agenix = inputs.agenix.packages.${system}.default;
+          om = inputs'.omnix.packages.default;
+          nixvim = inputs'.nixvim.packages.default;
+          agenix = inputs'.agenix.packages.default;
           vaapiIntel = pkgs.vaapiIntel.override {enableHybridCodec = true;};
           devour-flake = pkgs.callPackage inputs.devour-flake {};
           jellyfin-ffmpeg = pkgs.jellyfin-ffmpeg.override {
@@ -90,6 +88,8 @@
           };
         };
       };
+
+      debug = false;
     };
 
   inputs = {
