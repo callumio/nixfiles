@@ -41,6 +41,7 @@
           artemis = mkLinuxSystem ./hosts/artemis;
           hermes = mkLinuxSystem ./hosts/hermes;
         };
+        om.health.default = {nix-version.min-required = "2.18.5";};
       };
 
       perSystem = {
@@ -70,12 +71,13 @@
         devShells.default = final.mkShell {
           meta.description = "Default dev shell";
           inputsFrom = [config.pre-commit.devShell config.treefmt.build.devShell];
-          packages = with final; [just git nixvim cachix jq devour-flake agenix deadnix];
+          packages = with final; [just git nixvim cachix jq devour-flake om agenix deadnix];
         };
 
         apps = nixpkgs.lib.mapAttrs' (name: value: nixpkgs.lib.nameValuePair ("deploy-" + name) value) (inputs.nixinate.nixinate.${system} self).nixinate;
 
         packages = {
+          om = inputs.omnix.packages.${system}.default;
           nixvim = inputs.nixvim.packages.${system}.default;
           agenix = inputs.agenix.packages.${system}.default;
           vaapiIntel = pkgs.vaapiIntel.override {enableHybridCodec = true;};
@@ -127,7 +129,17 @@
       inputs.nixpkgs.follows = "unstable";
       inputs.home-manager.follows = "home-manager";
     };
-    #omnix-flake.url = "github:juspay/omnix?dir=nix/om";
+
+    omnix = {
+      url = "github:juspay/omnix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+        treefmt-nix.follows = "treefmt-nix";
+        devour-flake.follows = "devour-flake";
+        systems.follows = "systems";
+      };
+    };
 
     disko = {
       url = "github:nix-community/disko";
@@ -148,12 +160,15 @@
     };
 
     flake-compat.url = "github:edolstra/flake-compat";
+
     flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
 
     systems.url = "github:nix-systems/default";
     #systems.url = "github:nix-systems/default-linux";
     #systems.url = "github:nix-systems/x86_64-linux";
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
+    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 }
