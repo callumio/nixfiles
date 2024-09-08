@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 pick_session() {
 	selected=$(ghq list -p | fzf || exit 0)
