@@ -10,7 +10,7 @@
       }
       inputs.self.homeManagerModules.trayscale
     ];
-    users.c = import ../../home;
+    users.c = import ../../home/c;
     extraSpecialArgs = {inherit inputs;};
   };
 }

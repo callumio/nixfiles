@@ -41,6 +41,10 @@
           artemis = mkLinuxSystem ./hosts/artemis;
           hermes = mkLinuxSystem ./hosts/hermes;
         };
+        homeConfigurations = {
+          c = self.nixosConfigurations.artemis.config.home-manager.users.c.home;
+        };
+        diskoConfigurations = {}; # maybe?
         om.health.default = {nix-version.min-required = "2.18.5";};
       };
 
