@@ -6,7 +6,7 @@
   ...
 }: {
   imports = [(modulesPath + "/installer/scan/not-detected.nix")];
-
+  zramSwap.enable = true;
   boot = {
     initrd.availableKernelModules = ["xhci_pci" "thunderbolt" "nvme" "usb_storage" "rtsx_pci_sdmmc"];
     initrd.kernelModules = [];
