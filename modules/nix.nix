@@ -1,5 +1,6 @@
-{...}: {
+{pkgs, ...}: {
   nix = {
+    package = pkgs.nixVersions.latest;
     gc = {
       automatic = true;
       dates = "weekly";
@@ -7,7 +8,9 @@
     };
     extraOptions = "gc-keep-outputs = true";
     settings = {
-      experimental-features = ["nix-command" "flakes"];
+      experimental-features = ["nix-command" "flakes" "auto-allocate-uids"];
+      auto-optimise-store = true;
+      auto-allocate-uids = true;
 
       substituters = [
         "https://nix-community.cachix.org"
