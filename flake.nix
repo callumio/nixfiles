@@ -159,5 +159,27 @@
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
+
+    # my custom programs
+    nish = {
+      url = "github:callumio/nish";
+      inputs = {
+        nixpkgs.follows = "unstable";
+        flake-parts.follows = "flake-parts";
+        systems.follows = "systems";
+        treefmt-nix.follows = "treefmt-nix";
+        pre-commit-hooks.follows = "pre-commit-hooks";
+      };
+    };
+
+    nsbm = {
+      url = "github:callumio/nsbm";
+      inputs = {
+        nixpkgs.follows = "unstable";
+        treefmt-nix.follows = "treefmt-nix";
+        flake-parts.follows = "flake-parts";
+        systems.follows = "systems";
+      };
+    };
   };
 }
