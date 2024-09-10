@@ -1,6 +1,11 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  inputs,
+  ...
+}: {
   nix = {
     package = pkgs.nixVersions.latest;
+    registry.nixpkgs.flake = inputs.nixpkgs;
     gc = {
       automatic = true;
       dates = "weekly";
