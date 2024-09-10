@@ -36,6 +36,8 @@
     killall
     gcc
     pkg-config
+    nish
+    nsbm
   ];
 
   environment = {

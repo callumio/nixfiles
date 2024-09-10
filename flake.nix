@@ -159,5 +159,21 @@
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
+
+    # my custom programs
+    nish = {
+      url = "github:callumio/nish";
+      inputs.nixpkgs.follows = "unstable";
+    };
+
+    nsbm = {
+      url = "github:callumio/nsbm";
+      inputs = {
+        nixpkgs.follows = "unstable";
+        treefmt-nix.follows = "treefmt-nix";
+        flake-parts.follows = "flake-parts";
+        systems.follows = "systems";
+      };
+    };
   };
 }
