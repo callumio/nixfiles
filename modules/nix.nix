@@ -4,7 +4,7 @@
   ...
 }: {
   nix = {
-    package = pkgs.nixVersions.latest;
+    package = pkgs.nixVersions.nix_2_23;
     registry.nixpkgs.flake = inputs.nixpkgs;
     gc = {
       automatic = true;
