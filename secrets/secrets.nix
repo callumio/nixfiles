@@ -9,4 +9,5 @@ in {
   "wg-conf.age".publicKeys = keys.c ++ allSystems;
   "mesh-conf-infra.age".publicKeys = keys.c ++ allSystems;
   "mesh-conf-cleslie.age".publicKeys = keys.c ++ allSystems;
+  "forgejo-password.age".publicKeys = keys.c ++ [systems.hermes];
 }

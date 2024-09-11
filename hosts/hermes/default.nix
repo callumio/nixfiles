@@ -8,5 +8,6 @@
     ./ssh.nix
     ./media.nix
     ./headscale.nix
+    ./forgejo.nix
   ];
 }
