@@ -2,7 +2,7 @@ name: Update flake inputs
 on:
   schedule:
     # Every day, 5am
-    - cron: "0 5 * * *"
+    - cron: "0 5 * * 6"
   workflow_dispatch:
 
 jobs:
