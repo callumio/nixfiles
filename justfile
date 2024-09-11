@@ -9,6 +9,9 @@ alias c := cache
 rebuild:
 	sudo nixos-rebuild switch --flake .#
 
+deploy MACHINE:
+	nix run .#deploy-{{MACHINE}}
+
 vim:
   nix flake lock --update-input nixvim
 
