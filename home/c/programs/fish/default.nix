@@ -1,4 +1,9 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  mkFishPlug = pkg: {
+    name = pkg.pname;
+    inherit (pkg) src;
+  };
+in {
   programs.fish = {
     enable = true;
 
@@ -20,34 +25,13 @@
     };
 
     plugins = with pkgs.fishPlugins; [
-      {
-        name = "z";
-        inherit (z) src;
-      }
-      {
-        name = "hydro";
-        inherit (hydro) src;
-      }
-      {
-        name = "sponge";
-        inherit (sponge) src;
-      }
-      {
-        name = "grc";
-        inherit (grc) src;
-      }
-      {
-        name = "done";
-        inherit (done) src;
-      }
-      {
-        name = "fzf-fish";
-        inherit (fzf-fish) src;
-      }
-      {
-        name = "forgit";
-        inherit (forgit) src;
-      }
+      (mkFishPlug z)
+      (mkFishPlug hydro)
+      (mkFishPlug sponge)
+      (mkFishPlug grc)
+      (mkFishPlug done)
+      (mkFishPlug fzf-fish)
+      (mkFishPlug git-abbr)
     ];
   };
 }
