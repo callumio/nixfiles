@@ -7,7 +7,7 @@
       flaresolverr = {
         #image = "ghcr.io/flaresolverr/flaresolverr:latest";
         #image = "ghcr.io/flaresolverr/flaresolverr:pr-1282";
-        image = "docker.io/alexfozor/flaresolverr:pr-1300";
+        image = "docker.io/alexfozor/flaresolverr:pr-1300-experimental";
         autoStart = true;
         ports = ["127.0.0.1:8191:8191"];
         environment = {
