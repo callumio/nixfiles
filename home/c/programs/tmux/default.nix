@@ -1,4 +1,13 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  cLib,
+  ...
+}: let
+  getProgFor = cLib.getProgFor pkgs;
+  getProgFor' = cLib.getProgFor' pkgs;
+  tmux = getProgFor "tmux";
+  tmux-sessionizer = getProgFor' "tmux-sessionizer-cl" "tmux-sessionizer";
+in {
   programs.tmux = {
     enable = true;
     shortcut = "x";
@@ -42,9 +51,9 @@
       bind \\ split-window -v -c "#{pane_current_path}"
       bind c new-window -c "#{pane_current_path}"
 
-      bind-key -r s run-shell "tmux display-popup -E 'tmux-sessionizer -s'"
-      bind-key -r f run-shell "tmux display-popup -E 'tmux-sessionizer -p'"
-      bind-key -r m run-shell "tmux switch-client -t main"
+      bind-key -r s run-shell "${tmux} display-popup -E '${tmux-sessionizer} -s'"
+      bind-key -r f run-shell "${tmux} display-popup -E '${tmux-sessionizer} -p'"
+      bind-key -r m run-shell "${tmux} switch-client -t main"
       bind S choose-tree
 
       bind -r k select-pane -U
@@ -54,7 +63,7 @@
     '';
   };
 
-  home.packages = [
-    pkgs.tmux-sessionizer-cl
-  ];
+  # home.packages = [
+  #   pkgs.tmux-sessionizer-cl
+  # ];
 }

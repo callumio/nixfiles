@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  inputs,
+  cLib,
+  ...
+}: {
   programs.hyprlock.enable = true;
   security.pam.services.hyprlock = {};
   home-manager = {
@@ -11,6 +15,6 @@
       inputs.self.homeManagerModules.trayscale
     ];
     users.c = import ../../home/c;
-    extraSpecialArgs = {inherit inputs;};
+    extraSpecialArgs = {inherit inputs cLib;};
   };
 }

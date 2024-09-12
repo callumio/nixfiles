@@ -1,4 +1,28 @@
-{...}: {
+{
+  pkgs,
+  cLib,
+  ...
+}: let
+  getProgFor' = cLib.getProgFor' pkgs;
+  getProgFor = cLib.getProgFor pkgs;
+  web = getProgFor "firefox";
+  mail = getProgFor "betterbird";
+  chat = getProgFor "discord";
+  media = getProgFor "spotify";
+  terminal = getProgFor "alacritty";
+  runner = getProgFor "rofi";
+  rofi-rbw = getProgFor "rofi-rbw-wayland";
+  tmux = getProgFor "tmux";
+  slurp = getProgFor "slurp";
+  grim = getProgFor "grim";
+  wl-copy = getProgFor' "wl-clipboard" "wl-copy";
+  mullvad = getProgFor' "mullvad-vpn" "mullvad-gui";
+  playerctl = getProgFor "playerctl";
+  brightnessctl = getProgFor "brightnessctl";
+  wpctl = getProgFor' "wireplumber" "wpctl";
+  hyprlock = getProgFor "hyprlock";
+  hyprctl = getProgFor' "hyprland" "hyprctl";
+in {
   services = {
     blueman-applet.enable = true;
     network-manager-applet.enable = true;
@@ -65,7 +89,7 @@
     enable = true;
     systemd.enable = true;
     xwayland.enable = true;
-    # TODO: move to nix config over text
+
     settings = {
       "monitor" = ",prefered,auto,1";
 
@@ -137,13 +161,13 @@
           "$mainMod SHIFT, q, exit"
           "$mainMod, F, fullscreen"
           "$mainMod SHIFT, f, togglefloating"
-          "$mainMod, d, exec, rofi -show drun"
-          "$mainMod, w, exec, rofi -show window"
-          "$mainMod, p, exec, rofi-rbw --no-folder"
+          "$mainMod, d, exec, ${runner} -show drun"
+          "$mainMod, w, exec, ${runner} -show window"
+          "$mainMod, p, exec, ${rofi-rbw} --no-folder"
           "$mainMod, s, togglesplit"
-          "$mainMod SHIFT, r, exec, hyprctl reload"
-          "$mainMod, return, exec, alacritty -e tmux new -A -s main"
-          "$mainMod SHIFT, return, exec, [float; pin] alacritty -e tmux new -A -s main"
+          "$mainMod SHIFT, r, exec, ${hyprctl} reload"
+          "$mainMod, return, exec, ${terminal} -e ${tmux} new -A -s main"
+          "$mainMod SHIFT, return, exec, [float; pin] ${terminal} -e ${tmux} new -A -s main"
 
           "$mainMod, b, workspace, name:web"
           "$mainMod, n, workspace, name:chat"
@@ -172,9 +196,9 @@
           "$mainMod SHIFT, l, movewindow, r"
           "$mainMod SHIFT, k, movewindow, u"
           "$mainMod SHIFT, j, movewindow, d"
-          ''SHIFT, Print, exec, grim -g "$(slurp)" - | wl-copy''
-          ", Print, exec, grim - | wl-copy"
-          "$mainMod, 0, exec, hyprlock"
+          ''SHIFT, Print, exec, ${grim} -g "$(${slurp})" - | ${wl-copy}''
+          ", Print, exec, ${grim} - | ${wl-copy}"
+          "$mainMod, 0, exec, ${hyprlock}"
         ]
         ++ (builtins.concatLists (builtins.genList (x: let
             ws = x + 1;
@@ -187,10 +211,10 @@
           9));
 
       workspace = [
-        "name:web, on-created-empty: firefox"
-        "name:chat, on-created-empty: discord"
-        "name:media, on-created-empty: spotify"
-        "name:mail, on-created-empty: betterbird"
+        "name:web, on-created-empty: ${web}"
+        "name:chat, on-created-empty: ${chat}"
+        "name:media, on-created-empty: ${media}"
+        "name:mail, on-created-empty: ${mail}"
       ];
 
       bindm = [
@@ -199,25 +223,19 @@
       ];
 
       bindle = [
-        ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-        ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-        ", XF86AudioMute , exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-        ", XF86AudioMicMute , exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-        ", XF86AudioPlay , exec, playerctl play-pause"
-        ", XF86AudioPause , exec, playerctl play-pause"
-        ", XF86AudioNext , exec, playerctl next"
-        ", XF86AudioPrev , exec, playerctl previous"
-        ", XF86MonBrightnessUp, exec, brightnessctl -c backlight set +5%"
-        ", XF86MonBrightnessDown, exec, brightnessctl -c backlight set 5%-"
+        ", XF86AudioRaiseVolume, exec, ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+        ", XF86AudioLowerVolume, exec, ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+        ", XF86AudioMute , exec, ${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle"
+        ", XF86AudioMicMute , exec, ${wpctl} set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+        ", XF86AudioPlay , exec, ${playerctl} play-pause"
+        ", XF86AudioPause , exec, ${playerctl} play-pause"
+        ", XF86AudioNext , exec, ${playerctl} next"
+        ", XF86AudioPrev , exec, ${playerctl} previous"
+        ", XF86MonBrightnessUp, exec, ${brightnessctl} -c backlight set +5%"
+        ", XF86MonBrightnessDown, exec, ${brightnessctl} -c backlight set 5%-"
       ];
 
-      exec = [
-        #"pkill wpaperd & sleep 0.5 && wpaperd"
-        #"pkill waybar & sleep 0.5 && waybar"
-        #"pkill mako & sleep 0.5 && mako"
-      ];
-
-      exec-once = ["mullvad-gui"];
+      exec-once = [(toString mullvad)];
     };
   };
 }

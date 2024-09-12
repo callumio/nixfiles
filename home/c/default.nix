@@ -19,6 +19,7 @@
   };
 
   home.packages = with pkgs; [
+    # TODO: sort this out
     gnome.adwaita-icon-theme
     networkmanagerapplet
     libsecret

@@ -8,9 +8,10 @@
     ...
   } @ inputs: let
     mods = import ./modules;
+    cLib = import ./lib {inherit (nixpkgs) lib;};
     mkLinuxSystem = mod:
       nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs;};
+        specialArgs = {inherit inputs cLib;};
         modules =
           [
             inputs.home-manager.nixosModules.home-manager

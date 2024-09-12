@@ -1,8 +1,13 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  cLib,
+  ...
+}: let
   mkFishPlug = pkg: {
     name = pkg.pname;
     inherit (pkg) src;
   };
+  tmux = cLib.getProgFor pkgs "tmux";
 in {
   programs.fish = {
     enable = true;
@@ -12,14 +17,15 @@ in {
       trap __trap_exit_tmux EXIT
     '';
 
+    # TODO: dont use this directly
     shellAliases = {v = "nvim";};
 
     functions = {
       __trap_exit_tmux = {
         body = ''
-          test (tmux list-windows | wc -l) = 1 || exit
-          test (tmux list-panes | wc -l) = 1 || exit
-          tmux switch-client -t main
+          test (${tmux} list-windows | wc -l) = 1 || exit
+          test (${tmux} list-panes | wc -l) = 1 || exit
+          ${tmux} switch-client -t main
         '';
       };
     };

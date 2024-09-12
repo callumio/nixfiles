@@ -1,4 +1,10 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  cLib,
+  ...
+}: let
+  soundControl = cLib.getProgFor pkgs "pwvucontrol";
+in {
   programs.waybar = {
     enable = true;
     package = pkgs.waybar.override {
@@ -35,7 +41,7 @@
           tooltip = false;
         };
         wireplumber = {
-          on-click = "${pkgs.pwvucontrol}/bin/pwvucontrol";
+          on-click = toString soundControl;
           format = "{icon}  {volume}%";
           format-muted = "";
           format-icons = ["" "" ""];
