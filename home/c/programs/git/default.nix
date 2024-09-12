@@ -4,7 +4,7 @@
 
     userName = "Callum Leslie";
     userEmail = "git@cleslie.uk";
-    signing.key = "D382C4AFEECEAA90";
+    signing.key = "483E476D02ED580C";
     signing.signByDefault = true;
 
     ignores = [".direnv/"];
@@ -15,7 +15,7 @@
         contents = {
           user = {
             email = "psycl6@nottingham.ac.uk";
-            signingKey = "5A944DF89B6F65AC";
+            signingKey = "483E476D02ED580C";
           };
           credential = {helper = "store";};
         };

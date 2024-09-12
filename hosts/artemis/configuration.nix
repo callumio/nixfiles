@@ -31,6 +31,7 @@
     vim
     gnome.adwaita-icon-theme
     wget
+    pinentry
     fzf
     nil
     killall
