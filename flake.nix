@@ -20,8 +20,8 @@
               nixpkgs.config.allowUnfree = true;
               nixpkgs.overlays = [self.overlays.default];
             }
-            mod
           ]
+          ++ mod
           ++ mods.sharedModules;
       };
   in
@@ -38,8 +38,8 @@
         inherit (mods) homeManagerModules nixosModules;
         # TODO: use ./hosts/
         nixosConfigurations = {
-          artemis = mkLinuxSystem ./hosts/artemis;
-          hermes = mkLinuxSystem ./hosts/hermes;
+          artemis = mkLinuxSystem [./hosts/artemis inputs.lanzaboote.nixosModules.lanzaboote];
+          hermes = mkLinuxSystem [./hosts/hermes];
         };
         diskoConfigurations = {}; # maybe?
         om.health.default = {nix-version.min-required = "2.18.5";};
@@ -159,6 +159,11 @@
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
+
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # my custom programs
     nish = {

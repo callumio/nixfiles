@@ -37,6 +37,7 @@
     killall
     gcc
     pkg-config
+    sbctl
     nish
     nsbm
   ];
