@@ -5,6 +5,7 @@ alias r := rebuild
 alias v := vim
 alias u := update
 alias c := cache
+alias d := deploy
 
 rebuild:
 	sudo nixos-rebuild switch --flake .#
