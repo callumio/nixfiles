@@ -26,7 +26,7 @@ in {
   services = {
     blueman-applet.enable = true;
     network-manager-applet.enable = true;
-    kanshi.systemdTarget = "hyprland-session.target";
+    kanshi.systemdTarget = "graphical-session.target";
     udiskie = {
       enable = true;
       tray = "auto";
