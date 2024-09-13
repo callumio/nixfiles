@@ -85,6 +85,8 @@ in {
       };
     };
 
+    cloudflare-dyndns.domains = ["media.cleslie.uk" "watch.cleslie.uk" "request.cleslie.uk"];
+
     jellyfin = {
       enable = true;
       package = pkgs.jellyfin;

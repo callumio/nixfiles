@@ -13,6 +13,7 @@ in {
         ip_prefixes = "100.64.0.0/10";
       };
     };
+    cloudflare-dyndns.domains = [domain];
     caddy.virtualHosts.${domain}.extraConfig = ''
       reverse_proxy localhost:${toString config.services.headscale.port}
     '';

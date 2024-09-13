@@ -6,6 +6,7 @@
   domain = "git.cleslie.uk";
 in {
   services = {
+    cloudflare-dyndns.domains = [domain];
     forgejo = {
       enable = true;
       database.type = "postgres";

@@ -2,6 +2,7 @@
   imports = [
     ./hardware-configuration.nix
     ./configuration.nix
+    ./ddns.nix
     ./quassel.nix
     ./fail2ban.nix
     ./containers.nix
