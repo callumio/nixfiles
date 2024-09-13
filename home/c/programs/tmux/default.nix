@@ -20,15 +20,15 @@ in {
       sensible
       yank
       {
-        plugin = onedark-theme;
+        plugin = onedark-theme.overrideAttrs (_: {
+          patches = [./bar.patch];
+        });
         extraConfig = "\n";
       }
       {
         plugin = resurrect;
         extraConfig = ''
-          set -g @resurrect-strategy-vim 'session'
-          set -g @resurrect-strategy-nvim 'session'
-          set -g @resurrect-capture-pane-contents 'on'
+          set -g @resurrect-capture-pane-contents 'off'
         '';
       }
       {
@@ -62,8 +62,4 @@ in {
       bind -r l select-pane -R
     '';
   };
-
-  # home.packages = [
-  #   pkgs.tmux-sessionizer-cl
-  # ];
 }
