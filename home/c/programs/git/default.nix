@@ -34,6 +34,6 @@
       ghq = {root = "~/repos";};
     };
 
-    diff-so-fancy.enable = true;
+    delta.enable = true;
   };
 }
