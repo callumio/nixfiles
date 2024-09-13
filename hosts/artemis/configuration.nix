@@ -47,10 +47,7 @@
     sessionVariables = {NIXOS_OZONE_WL = "1";};
 
     shells = with pkgs; [fish];
-
-    # etc."greetd/environments".text = ''
-    #   hyprland
-    # '';
   };
+
   fonts.packages = with pkgs; [nerdfonts meslo-lgs-nf];
 }
