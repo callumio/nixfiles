@@ -11,5 +11,6 @@
     ./media.nix
     ./headscale.nix
     ./forgejo.nix
+    ./vaultwarden.nix
   ];
 }

@@ -3,7 +3,7 @@
     enable = true;
     settings = {
       base_url = "https://vaultwarden.cleslie.uk";
-      email = "cal@callumleslie.me";
+      email = "vw@cleslie.uk";
       pinentry = pkgs.pinentry-gnome3;
     };
   };
