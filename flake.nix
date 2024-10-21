@@ -115,8 +115,10 @@
     };
 
     stylix = {
-      url = "github:danth/stylix";
-      inputs.nixpkgs.follows = "unstable";
+      #url = "github:danth/stylix5";
+      url = "github:danth/stylix/993fcabd83d1e0ee5ea038b87041593cc73c1ebe";
+      inputs.nixpkgs.follows = "nixpkgs";
+
       inputs.home-manager.follows = "home-manager";
     };
 
