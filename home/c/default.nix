@@ -12,19 +12,24 @@
     username = "c";
     homeDirectory = "/home/c";
   };
+  home.pointerCursor = {
+    gtk.enable = true;
+    x11.enable = true;
+  };
   gtk.enable = true;
   gtk.iconTheme = {
-    package = pkgs.gnome.adwaita-icon-theme;
+    package = pkgs.adwaita-icon-theme;
     name = "Adwaita";
   };
 
   home.packages = with pkgs; [
+    apple-cursor
     # TODO: sort this out
-    gnome.adwaita-icon-theme
+    adwaita-icon-theme
     networkmanagerapplet
     libsecret
     bitwarden
-    betterbird
+    #betterbird
     wl-clipboard
     discord
     brightnessctl

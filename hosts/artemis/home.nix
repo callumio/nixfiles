@@ -10,9 +10,10 @@
       {
         stylix.targets = {
           fish.enable = false;
+          tmux.enable = false;
         };
       }
-      inputs.self.homeManagerModules.trayscale
+      #inputs.self.homeManagerModules.trayscale
     ];
     users.c = import ../../home/c;
     extraSpecialArgs = {inherit inputs cLib;};

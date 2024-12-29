@@ -12,11 +12,9 @@
     base16Scheme = "${pkgs.base16-schemes}/share/themes/onedark.yaml";
 
     cursor = {
-      # package = pkgs.bibata-cursors;
-      # name = "Bibata-Modern-Ice";
       package = pkgs.apple-cursor;
-      name = "macOS-Monterey";
-      size = 8;
+      name = "macOS";
+      size = 16;
     };
 
     fonts = {

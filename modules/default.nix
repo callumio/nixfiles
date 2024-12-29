@@ -25,9 +25,9 @@ let
     ./tailscale.nix
     ./secret.nix
   ];
-  homeManagerModules = exportModules [
-    ./trayscale.nix
-  ];
+  homeManagerModules =
+    exportModules [
+    ];
   sharedModules = with nixosModules; [
     pinentry-fix
     nix

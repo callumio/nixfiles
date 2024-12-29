@@ -27,7 +27,7 @@
       settings = {General = {Enable = "Source,Sink,Media,Socket";};};
     };
 
-    opengl = {
+    graphics = {
       # hardware.graphics on unstable
       enable = true;
       extraPackages = with pkgs; [

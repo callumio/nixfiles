@@ -1,12 +1,14 @@
 {
   pkgs,
   cLib,
+  lib,
   ...
 }: let
   getProgFor' = cLib.getProgFor' pkgs;
   getProgFor = cLib.getProgFor pkgs;
   web = getProgFor "firefox";
-  mail = getProgFor "betterbird";
+  #mail = getProgFor "betterbird";
+  mail = "";
   chat = getProgFor "discord";
   media = getProgFor "spotify";
   terminal = getProgFor "alacritty";
@@ -34,7 +36,7 @@ in {
   };
   programs.hyprlock = {
     enable = true;
-    settings = {
+    settings = lib.mkForce {
       background = [
         {
           path = "screenshot";
@@ -100,9 +102,11 @@ in {
       };
 
       decoration = {
-        drop_shadow = true;
-        shadow_range = 4;
-        shadow_render_power = 3;
+        shadow = {
+          enabled = true;
+          range = 4;
+          render_power = 3;
+        };
       };
 
       animations = {
@@ -118,11 +122,11 @@ in {
       dwindle = {
         pseudotile = true;
         preserve_split = true;
-        no_gaps_when_only = 1;
+        #no_gaps_when_only = 1;
       };
 
       master = {
-        no_gaps_when_only = 1;
+        #no_gaps_when_only = 1;
       };
 
       gestures.workspace_swipe = false;

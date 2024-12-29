@@ -29,7 +29,8 @@
 
   environment.systemPackages = with pkgs; [
     vim
-    gnome.adwaita-icon-theme
+    adwaita-icon-theme
+    apple-cursor
     wget
     pinentry
     fzf
