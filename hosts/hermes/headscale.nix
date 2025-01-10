@@ -8,7 +8,7 @@ in {
       port = 8080;
       settings = {
         server_url = "https://${domain}";
-        dns_config = {base_domain = "cleslie.uk";};
+        dns = {base_domain = "net.cleslie.uk";};
 
         ip_prefixes = "100.64.0.0/10";
       };

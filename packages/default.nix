@@ -12,7 +12,7 @@
   nish = inputs'.nish.packages.default;
   nsbm = inputs'.nsbm.packages.default;
   jellyfin-ffmpeg = pkgs.jellyfin-ffmpeg.override {
-    ffmpeg_6-full = pkgs.ffmpeg_6-full.override {
+    ffmpeg_7-full = pkgs.ffmpeg_7-full.override {
       withMfx = false;
       withVpl = true;
     };

@@ -19,7 +19,7 @@
 
   users.users.c = {
     isNormalUser = true;
-    extraGroups = ["wheel" "networkmanager" "libvirtd" "dialout"];
+    extraGroups = ["wheel" "networkmanager" "libvirtd" "dialout" "wireshark"];
     openssh.authorizedKeys.keys = config.keys.c;
     shell = pkgs.fish;
     packages = with pkgs; [];

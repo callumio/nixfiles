@@ -58,6 +58,7 @@
     xh
     unzip
     just
+    wireshark
     inputs.nixvim.packages."x86_64-linux".default # nixvim
   ];
 

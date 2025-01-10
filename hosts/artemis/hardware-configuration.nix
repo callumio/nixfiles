@@ -12,6 +12,10 @@
     initrd.kernelModules = [];
     kernelModules = ["kvm-intel"];
     extraModulePackages = [];
+    kernelParams = [
+      "i915.enable_psr=0"
+      "i915.enable_fbc=0"
+    ];
     #kernelPackages = pkgs.linuxPackages_latest;
 
     loader.systemd-boot.enable = lib.mkForce false;
@@ -32,11 +36,12 @@
       enable = true;
       extraPackages = with pkgs; [
         intel-media-driver # LIBVA_DRIVER_NAME=iHD
-        intel-vaapi-driver # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+        #intel-vaapi-driver # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+        intel-ocl
         libvdpau-va-gl
         vaapiVdpau
         intel-compute-runtime
-        unstable.vpl-gpu-rt
+        vpl-gpu-rt
       ];
     };
 

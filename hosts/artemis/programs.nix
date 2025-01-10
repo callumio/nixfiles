@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   programs = {
+    wireshark.enable = true;
     fish.enable = true;
     seahorse.enable = true;
     nix-ld.enable = true;
