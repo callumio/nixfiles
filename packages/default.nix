@@ -6,6 +6,7 @@
   tmux-sessionizer-cl = pkgs.callPackage ./tmux-sessionizer {};
   om = inputs'.omnix.packages.default;
   nixvim = inputs'.nixvim.packages.default;
+  nvf = inputs'.nvf.packages.default;
   agenix = inputs'.agenix.packages.default;
   vaapiIntel = pkgs.vaapiIntel.override {enableHybridCodec = true;};
   devour-flake = pkgs.callPackage inputs.devour-flake {};

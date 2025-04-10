@@ -14,7 +14,7 @@ deploy MACHINE:
 	nix run .#deploy-{{MACHINE}}
 
 vim:
-  nix flake lock --update-input nixvim
+  nix flake lock --update-input nvf
 
 update:
 	nix flake update

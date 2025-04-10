@@ -1,8 +1,4 @@
-{
-  inputs,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [./programs ./services];
 
   programs.home-manager.enable = true;
@@ -59,7 +55,8 @@
     unzip
     just
     wireshark
-    inputs.nixvim.packages."x86_64-linux".default # nixvim
+    nvf
+    #inputs.nixvim.packages."x86_64-linux".default # nixvim
   ];
 
   home.stateVersion = "24.05";

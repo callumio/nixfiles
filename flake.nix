@@ -71,7 +71,7 @@
         devShells.default = final.mkShell {
           meta.description = "Default dev shell";
           inputsFrom = [config.pre-commit.devShell config.treefmt.build.devShell];
-          packages = with final; [just git nixvim cachix jq devour-flake om agenix deadnix];
+          packages = with final; [just git nvf cachix jq devour-flake om agenix deadnix];
         };
 
         apps = nixpkgs.lib.mapAttrs' (name: value: nixpkgs.lib.nameValuePair ("deploy-" + name) value) (inputs'.nixinate.packages self);
@@ -96,6 +96,10 @@
       flake = false;
     };
 
+    nvf = {
+      url = "github:callumio/nvf";
+      inputs.nixpkgs.follows = "unstable";
+    };
     nixvim = {
       url = "github:callumio/nixvim";
       inputs.nixpkgs.follows = "unstable";
