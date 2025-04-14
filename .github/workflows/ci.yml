@@ -23,4 +23,5 @@ jobs:
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
           pushFilter: '(nerdfonts)'
           extraPullNames: nix-community, om
-      - run: nix run github:juspay/omnix --accept-flake-config -- ci run "."
+      - run: nix run github:srid/devour-flake --override-input flake .
+
