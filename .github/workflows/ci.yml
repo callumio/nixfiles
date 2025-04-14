@@ -16,7 +16,7 @@ jobs:
         uses: jlumbroso/free-disk-space@main
         with:
           tool-cache: true
-      - uses: DeterminateSystems/magic-nix-cache-action@v8
+      - uses: DeterminateSystems/magic-nix-cache-action@v9
       - uses: cachix/cachix-action@v15
         with:
           name: callumio-public
