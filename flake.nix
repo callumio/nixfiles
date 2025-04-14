@@ -100,10 +100,6 @@
       url = "github:callumio/nvf";
       inputs.nixpkgs.follows = "unstable";
     };
-    nixvim = {
-      url = "github:callumio/nixvim";
-      inputs.nixpkgs.follows = "unstable";
-    };
 
     agenix = {
       url = "github:ryantm/agenix";
@@ -129,7 +125,6 @@
     omnix = {
       url = "github:juspay/omnix";
       inputs = {
-        treefmt-nix.follows = "treefmt-nix";
         systems.follows = "systems";
       };
     };

@@ -26,7 +26,7 @@
     openssh.authorizedKeys.keys = config.keys.c;
     packages = with pkgs; [
       tree
-      nixvim
+      nvf
     ];
   };
 
