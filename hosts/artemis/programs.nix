@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   programs = {
     wireshark.enable = true;
     fish.enable = true;
@@ -16,7 +20,7 @@
           #   url = "https://i.redd.it/jd1nuwsl0d121.jpg";
           #   sha256 = "sha256-ff3ajGVsay2dtHiHmO2MYlqCvexUQjGifMs/ofzuyvI=";
           # };
-          fit = "Contain";
+          fit = lib.mkForce "Contain";
         };
         # GTK = {
         #   application_prefer_dark_theme = true;
