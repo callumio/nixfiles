@@ -7,32 +7,35 @@
     };
 
     profiles.c = {
-      bookmarks = [
-        {
-          name = "NixOS";
-          toolbar = true;
-          bookmarks = [
-            {
-              name = "Packages";
-              url = "https://search.nixos.org";
-            }
-            {
-              name = "Wiki";
-              url = "https://nixos.wiki";
-            }
-          ];
-        }
-        {
-          name = "News";
-          toolbar = true;
-          bookmarks = [
-            {
-              name = "Al Jazeera";
-              url = "https://aljazeera.com";
-            }
-          ];
-        }
-      ];
+      bookmarks = {
+        force = true;
+        settings = [
+          {
+            name = "NixOS";
+            toolbar = true;
+            bookmarks = [
+              {
+                name = "Packages";
+                url = "https://search.nixos.org";
+              }
+              {
+                name = "Wiki";
+                url = "https://nixos.wiki";
+              }
+            ];
+          }
+          {
+            name = "News";
+            toolbar = true;
+            bookmarks = [
+              {
+                name = "Al Jazeera";
+                url = "https://aljazeera.com";
+              }
+            ];
+          }
+        ];
+      };
 
       containers = {};
 
@@ -42,7 +45,7 @@
 
       userContent = "";
 
-      extensions = with inputs.firefox-addons.packages."x86_64-linux"; [
+      extensions.packages = with inputs.firefox-addons.packages."x86_64-linux"; [
         bitwarden
         ublock-origin
         darkreader

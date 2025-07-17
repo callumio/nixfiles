@@ -3,10 +3,11 @@
   services = {
     network-manager-applet.enable = true;
     mpris-proxy.enable = true;
+    wpaperd.enable = true;
     gpg-agent = {
       enable = true;
       enableSshSupport = true;
-      pinentryPackage = pkgs.pinentry-gnome3;
+      pinentry.package = pkgs.pinentry-gnome3;
     };
   };
 }

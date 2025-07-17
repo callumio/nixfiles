@@ -14,6 +14,5 @@
 
   programs = {
     gpg.enable = true;
-    wpaperd.enable = true;
   };
 }

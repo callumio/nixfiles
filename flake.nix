@@ -83,7 +83,7 @@
     };
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     nixinate = {
@@ -110,16 +110,14 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     stylix = {
-      url = "github:danth/stylix/release-24.11";
+      url = "github:danth/stylix/release-25.05";
       #url = "github:danth/stylix/993fcabd83d1e0ee5ea038b87041593cc73c1ebe";
       inputs.nixpkgs.follows = "nixpkgs";
-
-      inputs.home-manager.follows = "home-manager";
     };
 
     omnix = {
@@ -160,7 +158,7 @@
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.1";
+      url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

@@ -14,10 +14,26 @@
         ];
       }
       {
-        profile.name = "work";
+        profile.name = "work1";
         profile.outputs = [
           {
             criteria = "HP Inc. HP E27 G5 CNC33810R4";
+            mode = "1920x1080@60.00Hz";
+            position = "0,0";
+          }
+          {
+            criteria = "eDP-1";
+            status = "enable";
+            scale = 1.0;
+            position = "1920,0";
+          }
+        ];
+      }
+      {
+        profile.name = "work2";
+        profile.outputs = [
+          {
+            criteria = "Samsung Electric Company LF27T35 H4ZNB01306";
             mode = "1920x1080@60.00Hz";
             position = "0,0";
           }

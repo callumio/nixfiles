@@ -1,10 +1,5 @@
-{
-  pkgs,
-  inputs,
-  ...
-}: {
+{inputs, ...}: {
   nix = {
-    package = pkgs.nixVersions.nix_2_23;
     registry.nixpkgs.flake = inputs.nixpkgs;
     gc = {
       automatic = true;
