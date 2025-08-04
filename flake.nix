@@ -105,7 +105,6 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
 
-      # i don't need darwin!!!
       inputs.darwin.follows = "";
     };
 
@@ -116,7 +115,6 @@
 
     stylix = {
       url = "github:danth/stylix/release-25.05";
-      #url = "github:danth/stylix/993fcabd83d1e0ee5ea038b87041593cc73c1ebe";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -151,8 +149,6 @@
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
 
     systems.url = "github:nix-systems/default";
-    #systems.url = "github:nix-systems/default-linux";
-    #systems.url = "github:nix-systems/x86_64-linux";
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
@@ -162,7 +158,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # my custom programs
     nish = {
       url = "github:callumio/nish";
       inputs = {

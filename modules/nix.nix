@@ -1,6 +1,7 @@
 {inputs, ...}: {
   nix = {
     registry.nixpkgs.flake = inputs.nixpkgs;
+    registry.unstable.flake = inputs.unstable;
     gc = {
       automatic = true;
       dates = "weekly";
