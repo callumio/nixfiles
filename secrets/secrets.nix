@@ -10,6 +10,7 @@ in {
   "mesh-conf-infra.age".publicKeys = keys.c ++ allSystems;
   "mesh-conf-cleslie.age".publicKeys = keys.c ++ allSystems;
   "forgejo-password.age".publicKeys = keys.c ++ [systems.hermes];
+  "copyparty-c.age".publicKeys = keys.c ++ [systems.hermes];
   "cloudflare-api.age".publicKeys = keys.c ++ [systems.hermes];
   "vaultwarden-env.age".publicKeys = keys.c ++ [systems.hermes];
 }

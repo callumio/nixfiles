@@ -9,7 +9,7 @@
   } @ inputs: let
     mods = import ./modules;
     cLib = import ./lib {inherit (nixpkgs) lib;};
-    mkLinuxSystem = mod:
+    mkLinuxSystem = mod: ovl:
       nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs cLib;};
         modules =
@@ -19,7 +19,7 @@
             inputs.agenix.nixosModules.default
             {
               nixpkgs.config.allowUnfree = true;
-              nixpkgs.overlays = [self.overlays.default];
+              nixpkgs.overlays = [self.overlays.default] ++ ovl;
             }
           ]
           ++ mod
@@ -39,8 +39,8 @@
         inherit (mods) homeManagerModules nixosModules;
         # TODO: use ./hosts/
         nixosConfigurations = {
-          artemis = mkLinuxSystem [./hosts/artemis inputs.lanzaboote.nixosModules.lanzaboote];
-          hermes = mkLinuxSystem [./hosts/hermes];
+          artemis = mkLinuxSystem [./hosts/artemis inputs.lanzaboote.nixosModules.lanzaboote] [];
+          hermes = mkLinuxSystem [./hosts/hermes inputs.copyparty.nixosModules.default] [inputs.copyparty.overlays.default];
         };
         diskoConfigurations = {}; # maybe?
         om.health.default = {nix-version.min-required = "2.18.5";};
@@ -177,6 +177,10 @@
         flake-parts.follows = "flake-parts";
         systems.follows = "systems";
       };
+    };
+    copyparty = {
+      url = "github:9001/copyparty";
+      inputs.nixpkgs.follows = "unstable";
     };
   };
 }
