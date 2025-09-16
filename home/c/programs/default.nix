@@ -4,6 +4,7 @@
     ./waybar
     ./git
     ./fish
+    ./jj
     ./rofi
     ./rbw
     ./firefox
