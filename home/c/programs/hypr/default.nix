@@ -7,8 +7,7 @@
   getProgFor' = cLib.getProgFor' pkgs;
   getProgFor = cLib.getProgFor pkgs;
   web = getProgFor "firefox";
-  #mail = getProgFor "betterbird";
-  mail = "";
+  # mail = "";
   chat = getProgFor "discord";
   media = getProgFor "spotify";
   terminal = getProgFor "alacritty";
@@ -218,7 +217,7 @@ in {
         "name:web, on-created-empty: ${web}"
         "name:chat, on-created-empty: ${chat}"
         "name:media, on-created-empty: ${media}"
-        "name:mail, on-created-empty: ${mail}"
+        #"name:mail, on-created-empty: ${mail}"
       ];
 
       bindm = [
