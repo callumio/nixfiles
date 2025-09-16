@@ -16,7 +16,12 @@ in {
         "/media" = {
           path = "/var/lib/media/library";
           access = {
-            r = "*";
+            rw = ["c"];
+          };
+        };
+        "/paperless" = {
+          path = "/var/lib/media/library";
+          access = {
             rw = ["c"];
           };
         };

@@ -40,7 +40,7 @@
         # TODO: use ./hosts/
         nixosConfigurations = {
           artemis = mkLinuxSystem [./hosts/artemis inputs.lanzaboote.nixosModules.lanzaboote] [];
-          hermes = mkLinuxSystem [./hosts/hermes inputs.copyparty.nixosModules.default] [inputs.copyparty.overlays.default];
+          hermes = mkLinuxSystem [./hosts/hermes inputs.nocodb.nixosModules.nocodb inputs.copyparty.nixosModules.default] [inputs.copyparty.overlays.default];
         };
         diskoConfigurations = {}; # maybe?
         om.health.default = {nix-version.min-required = "2.18.5";};
@@ -54,7 +54,12 @@
         ...
       }: {
         _module.args.pkgs = inputs'.nixpkgs.legacyPackages.extend self.overlays.default;
-        overlayAttrs = config.packages // {unstable = inputs'.unstable.legacyPackages;};
+        overlayAttrs =
+          config.packages
+          // {
+            unstable = inputs'.unstable.legacyPackages;
+            scenics = inputs'.scenics.packages;
+          };
 
         pre-commit = {
           check.enable = false;
@@ -85,6 +90,9 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    scenics.url = "github:callumio/scenics";
+    scenics.inputs.nixpkgs.follows = "unstable";
 
     nixinate = {
       url = "github:callumio/nixinate";
@@ -181,6 +189,11 @@
     copyparty = {
       url = "github:9001/copyparty";
       inputs.nixpkgs.follows = "unstable";
+    };
+
+    nocodb = {
+      url = "github:nocodb/nocodb?ref=bec1fa4";
+      #inputs.nixpkgs.follows = "unstable";
     };
   };
 }
