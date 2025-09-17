@@ -16,7 +16,7 @@
         diff-formatter = ":git";
       };
       git = {
-        private-commits = "description(glob:'wip:*') | description(glob:'private:*') | description(glob:'fixup*:*')";
+        private-commits = "description(glob:'wip:*') | description(glob:'private:*') | description(glob:'fixup*')";
       };
 
       "--scope" = [
