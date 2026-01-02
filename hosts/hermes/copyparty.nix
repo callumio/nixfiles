@@ -20,7 +20,7 @@ in {
           };
         };
         "/paperless" = {
-          path = "/var/lib/media/library";
+          path = "/var/lib/paperless";
           access = {
             rw = ["c"];
           };

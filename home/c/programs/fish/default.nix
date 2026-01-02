@@ -13,6 +13,7 @@ in {
     enable = true;
 
     interactiveShellInit = ''
+      set sponge_purge_only_on_exit true
       set fish_greeting
       trap __trap_exit_tmux EXIT
     '';
@@ -31,7 +32,6 @@ in {
     };
 
     plugins = with pkgs.fishPlugins; [
-      (mkFishPlug z)
       (mkFishPlug hydro)
       (mkFishPlug sponge)
       (mkFishPlug grc)
