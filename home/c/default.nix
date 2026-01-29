@@ -24,7 +24,7 @@
     adwaita-icon-theme
     networkmanagerapplet
     libsecret
-    bitwarden
+    bitwarden-desktop
     #betterbird
     wl-clipboard
     discord

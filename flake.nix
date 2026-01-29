@@ -39,7 +39,7 @@
         inherit (mods) homeManagerModules nixosModules;
         # TODO: use ./hosts/
         nixosConfigurations = {
-          artemis = mkLinuxSystem [./hosts/artemis inputs.lanzaboote.nixosModules.lanzaboote] [];
+          artemis = mkLinuxSystem [./hosts/artemis] [];
           hermes = mkLinuxSystem [./hosts/hermes inputs.nocodb.nixosModules.nocodb inputs.copyparty.nixosModules.default] [inputs.copyparty.overlays.default];
         };
         diskoConfigurations = {}; # maybe?
@@ -88,7 +88,7 @@
     };
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     scenics.url = "github:callumio/scenics";
@@ -117,12 +117,12 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     stylix = {
-      url = "github:danth/stylix/release-25.05";
+      url = "github:danth/stylix/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -160,11 +160,6 @@
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
-
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.2";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     nish = {
       url = "github:callumio/nish";

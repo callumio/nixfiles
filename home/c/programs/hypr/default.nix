@@ -11,7 +11,7 @@
   chat = getProgFor "discord";
   media = getProgFor "spotify";
   terminal = getProgFor "alacritty";
-  runner = getProgFor' "rofi-wayland" "rofi";
+  runner = getProgFor "rofi";
   rofi-rbw = getProgFor' "rofi-rbw-wayland" "rofi-rbw";
   tmux = getProgFor "tmux";
   slurp = getProgFor "slurp";

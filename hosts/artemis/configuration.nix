@@ -32,7 +32,7 @@
     adwaita-icon-theme
     apple-cursor
     wget
-    pinentry
+    pinentry-gnome3
     fzf
     nil
     killall

@@ -18,11 +18,8 @@
     ];
     #kernelPackages = pkgs.linuxPackages_latest;
 
-    loader.systemd-boot.enable = lib.mkForce false;
-    lanzaboote = {
-      enable = true;
-      pkiBundle = "/etc/secureboot";
-    };
+    # loader.systemd-boot.enable = lib.mkForce false;
+    loader.systemd-boot.enable = true;
   };
   hardware = {
     bluetooth = {
@@ -39,7 +36,7 @@
         #intel-vaapi-driver # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
         intel-ocl
         libvdpau-va-gl
-        vaapiVdpau
+        libva-vdpau-driver
         intel-compute-runtime
         vpl-gpu-rt
       ];

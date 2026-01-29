@@ -5,9 +5,9 @@ in {
     cloudflare-dyndns.domains = [domain];
     n8n = {
       enable = true;
-      webhookUrl = "https://" + domain + "/";
-      settings = {
-        port = 5678;
+      environment = {
+        PORT = "5678";
+        WEBHOOK_URL = "https://" + domain + "/";
       };
     };
     caddy.virtualHosts.${domain}.extraConfig = ''
