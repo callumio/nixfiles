@@ -1,8 +1,4 @@
-{
-  pkgs,
-  config,
-  ...
-}: let
+{pkgs, ...}: let
   mediaDir = "/var/lib/media";
 in {
   users = {

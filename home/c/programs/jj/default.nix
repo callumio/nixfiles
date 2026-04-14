@@ -1,4 +1,4 @@
-{lib, ...}: {
+{...}: {
   programs.jujutsu = {
     enable = true;
     settings = {

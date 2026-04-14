@@ -7,7 +7,7 @@
   om = inputs'.omnix.packages.default;
   nvf = inputs'.nvf.packages.default;
   agenix = inputs'.agenix.packages.default;
-  vaapiIntel = pkgs.vaapiIntel.override {enableHybridCodec = true;};
+  vaapiIntel = pkgs.intel-vaapi-driver.override {enableHybridCodec = true;};
   devour-flake = pkgs.callPackage inputs.devour-flake {};
   nish = inputs'.nish.packages.default;
   nsbm = inputs'.nsbm.packages.default;
