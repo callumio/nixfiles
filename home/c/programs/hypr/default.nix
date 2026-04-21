@@ -128,8 +128,6 @@ in {
         #no_gaps_when_only = 1;
       };
 
-      gestures.workspace_swipe = false;
-
       misc = {
         enable_swallow = true;
         swallow_regex = "Alacritty";
