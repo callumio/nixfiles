@@ -95,6 +95,7 @@
               nvf
               cachix
               jq
+              nvd
               devour-flake
               agenix
               deadnix
@@ -173,7 +174,7 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
 
-    systems.url = "github:nix-systems/default";
+    systems.url = "github:nix-systems/triplet";
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
