@@ -3,6 +3,6 @@
   flake.nixosModules.secrets =
     { ... }:
     {
-      imports = [ ../secrets/secrets-configuration.nix ];
+      imports = [ ../../secrets/secrets-configuration.nix ];
     };
 }
