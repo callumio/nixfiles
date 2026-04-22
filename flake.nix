@@ -7,7 +7,6 @@
     flake-parts,
     ...
   } @ inputs: let
-    mods = import ./modules;
     cLib = import ./lib {inherit (nixpkgs) lib;};
     mkLinuxSystem = mod: ovl:
       nixpkgs.lib.nixosSystem {
@@ -30,8 +29,7 @@
             self.nixosModules.tailscale
             self.nixosModules.deploy
           ]
-          ++ mod
-          ++ mods.sharedModules;
+          ++ mod;
       };
   in
     flake-parts.lib.mkFlake {inherit self inputs;} {
@@ -45,7 +43,6 @@
       systems = import inputs.systems;
 
       flake = {
-        inherit (mods) homeManagerModules nixosModules;
         # TODO: use ./hosts/
         nixosConfigurations = {
           artemis = mkLinuxSystem [./hosts/artemis] [];
