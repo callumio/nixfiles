@@ -1,24 +1,26 @@
 {
   description = "C's Nix-Config";
 
-  outputs = {
-    self,
-    nixpkgs,
-    flake-parts,
-    ...
-  } @ inputs: let
-    cLib = import ./lib {inherit (nixpkgs) lib;};
-    mkLinuxSystem = mod: ovl:
-      nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs cLib;};
-        modules =
-          [
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-parts,
+      ...
+    }@inputs:
+    let
+      cLib = import ./lib { inherit (nixpkgs) lib; };
+      mkLinuxSystem =
+        mod: ovl:
+        nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs cLib; };
+          modules = [
             inputs.home-manager.nixosModules.home-manager
             inputs.stylix.nixosModules.stylix
             inputs.agenix.nixosModules.default
             {
               nixpkgs.config.allowUnfree = true;
-              nixpkgs.overlays = [self.overlays.default] ++ ovl;
+              nixpkgs.overlays = [ self.overlays.default ] ++ ovl;
             }
             self.nixosModules.nix-config
             self.nixosModules.boot
@@ -30,9 +32,9 @@
             self.nixosModules.deploy
           ]
           ++ mod;
-      };
-  in
-    flake-parts.lib.mkFlake {inherit self inputs;} {
+        };
+    in
+    flake-parts.lib.mkFlake { inherit self inputs; } {
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
         inputs.pre-commit-hooks.flakeModule
@@ -45,70 +47,70 @@
       flake = {
         # TODO: use ./hosts/
         nixosConfigurations = {
-          artemis = mkLinuxSystem [./hosts/artemis] [];
+          artemis = mkLinuxSystem [ ./hosts/artemis ] [ ];
           hermes =
             mkLinuxSystem
-            [./hosts/hermes inputs.nocodb.nixosModules.nocodb inputs.copyparty.nixosModules.default]
-            [inputs.copyparty.overlays.default];
+              [ ./hosts/hermes inputs.nocodb.nixosModules.nocodb inputs.copyparty.nixosModules.default ]
+              [ inputs.copyparty.overlays.default ];
         };
-        diskoConfigurations = {}; # maybe?
+        diskoConfigurations = { }; # maybe?
         om.health.default = {
           nix-version.min-required = "2.18.5";
         };
       };
 
-      perSystem = {
-        config,
-        pkgs,
-        final,
-        inputs',
-        ...
-      }: {
-        _module.args.pkgs = inputs'.nixpkgs.legacyPackages.extend self.overlays.default;
-        overlayAttrs =
-          config.packages
-          // {
+      perSystem =
+        {
+          config,
+          pkgs,
+          final,
+          inputs',
+          ...
+        }:
+        {
+          _module.args.pkgs = inputs'.nixpkgs.legacyPackages.extend self.overlays.default;
+          overlayAttrs = config.packages // {
             unstable = inputs'.unstable.legacyPackages;
             scenics = inputs'.scenics.packages;
           };
 
-        pre-commit = {
-          check.enable = false;
-          settings.hooks.alejandra.enable = true;
-          settings.hooks.deadnix.enable = true;
+          pre-commit = {
+            check.enable = false;
+            settings.hooks.alejandra.enable = true;
+            settings.hooks.deadnix.enable = true;
+          };
+
+          treefmt.config = {
+            projectRootFile = "flake.nix";
+            programs.nixfmt.enable = true;
+            programs.deadnix.enable = true;
+          };
+
+          devShells.default = final.mkShell {
+            meta.description = "Default dev shell";
+            inputsFrom = [
+              config.pre-commit.devShell
+              config.treefmt.build.devShell
+            ];
+            packages = with final; [
+              just
+              git
+              nvf
+              cachix
+              jq
+              devour-flake
+              om
+              agenix
+              deadnix
+            ];
+          };
+
+          apps = nixpkgs.lib.mapAttrs' (name: value: nixpkgs.lib.nameValuePair ("deploy-" + name) value) (
+            inputs'.nixinate.packages self
+          );
+
+          packages = import ./packages { inherit pkgs inputs inputs'; };
         };
-
-        treefmt.config = {
-          projectRootFile = "flake.nix";
-          programs.alejandra.enable = true;
-          programs.deadnix.enable = true;
-        };
-
-        devShells.default = final.mkShell {
-          meta.description = "Default dev shell";
-          inputsFrom = [
-            config.pre-commit.devShell
-            config.treefmt.build.devShell
-          ];
-          packages = with final; [
-            just
-            git
-            nvf
-            cachix
-            jq
-            devour-flake
-            om
-            agenix
-            deadnix
-          ];
-        };
-
-        apps = nixpkgs.lib.mapAttrs' (name: value: nixpkgs.lib.nameValuePair ("deploy-" + name) value) (
-          inputs'.nixinate.packages self
-        );
-
-        packages = import ./packages {inherit pkgs inputs inputs';};
-      };
 
       debug = false;
     };
