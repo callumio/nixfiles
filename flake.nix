@@ -21,6 +21,14 @@
               nixpkgs.config.allowUnfree = true;
               nixpkgs.overlays = [self.overlays.default] ++ ovl;
             }
+            self.nixosModules.nix-config
+            self.nixosModules.boot
+            self.nixosModules.gpg-pinentry-wayland
+            self.nixosModules.keys
+            self.nixosModules.hm
+            self.nixosModules.secrets
+            self.nixosModules.tailscale
+            self.nixosModules.deploy
           ]
           ++ mod
           ++ mods.sharedModules;
@@ -31,6 +39,7 @@
         inputs.flake-parts.flakeModules.easyOverlay
         inputs.pre-commit-hooks.flakeModule
         inputs.treefmt-nix.flakeModule
+        (inputs.import-tree ./tree)
       ];
 
       systems = import inputs.systems;
@@ -40,10 +49,15 @@
         # TODO: use ./hosts/
         nixosConfigurations = {
           artemis = mkLinuxSystem [./hosts/artemis] [];
-          hermes = mkLinuxSystem [./hosts/hermes inputs.nocodb.nixosModules.nocodb inputs.copyparty.nixosModules.default] [inputs.copyparty.overlays.default];
+          hermes =
+            mkLinuxSystem
+            [./hosts/hermes inputs.nocodb.nixosModules.nocodb inputs.copyparty.nixosModules.default]
+            [inputs.copyparty.overlays.default];
         };
         diskoConfigurations = {}; # maybe?
-        om.health.default = {nix-version.min-required = "2.18.5";};
+        om.health.default = {
+          nix-version.min-required = "2.18.5";
+        };
       };
 
       perSystem = {
@@ -75,11 +89,26 @@
 
         devShells.default = final.mkShell {
           meta.description = "Default dev shell";
-          inputsFrom = [config.pre-commit.devShell config.treefmt.build.devShell];
-          packages = with final; [just git nvf cachix jq devour-flake om agenix deadnix];
+          inputsFrom = [
+            config.pre-commit.devShell
+            config.treefmt.build.devShell
+          ];
+          packages = with final; [
+            just
+            git
+            nvf
+            cachix
+            jq
+            devour-flake
+            om
+            agenix
+            deadnix
+          ];
         };
 
-        apps = nixpkgs.lib.mapAttrs' (name: value: nixpkgs.lib.nameValuePair ("deploy-" + name) value) (inputs'.nixinate.packages self);
+        apps = nixpkgs.lib.mapAttrs' (name: value: nixpkgs.lib.nameValuePair ("deploy-" + name) value) (
+          inputs'.nixinate.packages self
+        );
 
         packages = import ./packages {inherit pkgs inputs inputs';};
       };
@@ -190,5 +219,7 @@
       url = "github:nocodb/nocodb?ref=bec1fa4";
       #inputs.nixpkgs.follows = "unstable";
     };
+
+    import-tree.url = "github:vic/import-tree";
   };
 }

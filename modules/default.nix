@@ -1,6 +1,7 @@
 let
   exportModules = args:
-    builtins.listToAttrs (map (arg: {
+    builtins.listToAttrs (
+      map (arg: {
         name = let
           str = baseNameOf arg;
           suffix = ".nix";
@@ -13,30 +14,16 @@ let
 
         value = import arg;
       })
-      args);
+      args
+    );
 
-  nixosModules = exportModules [
-    ./nix.nix
-    ./pinentry-fix.nix
-    ./hm.nix
-    ./boot.nix
-    ./keys.nix
-    ./deploy.nix
-    ./tailscale.nix
-    ./secret.nix
-  ];
+  nixosModules =
+    exportModules [
+    ];
   homeManagerModules =
     exportModules [
     ];
   sharedModules = with nixosModules; [
-    pinentry-fix
-    nix
-    hm
-    boot
-    keys
-    deploy
-    tailscale
-    secret
   ];
 in {
   inherit nixosModules homeManagerModules sharedModules;
