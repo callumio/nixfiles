@@ -54,9 +54,6 @@
               [ inputs.copyparty.overlays.default ];
         };
         diskoConfigurations = { }; # maybe?
-        om.health.default = {
-          nix-version.min-required = "2.18.5";
-        };
       };
 
       perSystem =
@@ -76,7 +73,7 @@
 
           pre-commit = {
             check.enable = false;
-            settings.hooks.alejandra.enable = true;
+            settings.hooks.nixfmt.enable = true;
             settings.hooks.deadnix.enable = true;
           };
 
@@ -99,7 +96,6 @@
               cachix
               jq
               devour-flake
-              om
               agenix
               deadnix
             ];
@@ -152,13 +148,6 @@
     stylix = {
       url = "github:danth/stylix/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    omnix = {
-      url = "github:juspay/omnix";
-      inputs = {
-        systems.follows = "systems";
-      };
     };
 
     disko = {
