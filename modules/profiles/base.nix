@@ -1,13 +1,15 @@
-{ config, ... }:
+{ inputs, config, ... }:
 {
   flake.nixosModules.profile-base = {
-    import = with config.flake.nixosModules; [
-      nix-config
-      boot
-      keys
-      hm # maybe drop and make desktop only?
-      secrets
-      tailscale
+    imports = [
+      inputs.home-manager.nixosModules.home-manager
+      inputs.agenix.nixosModules.default
+      config.flake.nixosModules.nix-config
+      config.flake.nixosModules.boot
+      config.flake.nixosModules.keys
+      config.flake.nixosModules.hm
+      config.flake.nixosModules.secrets
+      config.flake.nixosModules.tailscale
     ];
   };
 }

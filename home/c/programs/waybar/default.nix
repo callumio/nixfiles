@@ -1,10 +1,12 @@
 {
   pkgs,
-  cLib,
+  lib,
   ...
-}: let
-  soundControl = cLib.getProgFor pkgs "pwvucontrol";
-in {
+}:
+let
+  soundControl = lib.getExe pkgs.pwvucontrol;
+in
+{
   programs.waybar = {
     enable = true;
     package = pkgs.waybar;
@@ -14,9 +16,19 @@ in {
         layer = "top";
         position = "bottom";
         height = 20;
-        modules-left = ["hyprland/workspaces" "hyprland/submap"];
-        modules-center = ["hyprland/window"];
-        modules-right = ["temperature" "wireplumber" "backlight" "battery" "clock" "tray"];
+        modules-left = [
+          "hyprland/workspaces"
+          "hyprland/submap"
+        ];
+        modules-center = [ "hyprland/window" ];
+        modules-right = [
+          "temperature"
+          "wireplumber"
+          "backlight"
+          "battery"
+          "clock"
+          "tray"
+        ];
         clock = {
           tooltip = false;
           interval = 1;
@@ -34,19 +46,34 @@ in {
           format = "{icon}  {capacity}%";
           format-good = "{icon}  {capacity}%";
           format-full = "  {capacity}%";
-          format-icons = ["" "" "" "" ""];
+          format-icons = [
+            ""
+            ""
+            ""
+            ""
+            ""
+          ];
           tooltip = false;
         };
         wireplumber = {
           on-click = toString soundControl;
           format = "{icon}  {volume}%";
           format-muted = "";
-          format-icons = ["" "" ""];
+          format-icons = [
+            ""
+            ""
+            ""
+          ];
           tooltip = false;
         };
         backlight = {
           format = "{icon} {percent}%";
-          format-icons = ["" "" "" ""];
+          format-icons = [
+            ""
+            ""
+            ""
+            ""
+          ];
           tooltip = false;
         };
         tray = {
@@ -58,7 +85,7 @@ in {
         temperature = {
           thermal-zone = 5;
           format = "{icon} {temperatureC}°C";
-          format-icons = [""];
+          format-icons = [ "" ];
           interval = 30;
           tooltip = false;
         };

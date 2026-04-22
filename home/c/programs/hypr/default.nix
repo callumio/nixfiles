@@ -1,29 +1,27 @@
 {
   pkgs,
-  cLib,
   lib,
   ...
-}: let
-  getProgFor' = cLib.getProgFor' pkgs;
-  getProgFor = cLib.getProgFor pkgs;
-  web = getProgFor "firefox";
-  # mail = "";
-  chat = getProgFor "discord";
-  media = getProgFor "spotify";
-  terminal = getProgFor "alacritty";
-  runner = getProgFor "rofi";
-  rofi-rbw = getProgFor' "rofi-rbw-wayland" "rofi-rbw";
-  tmux = getProgFor "tmux";
-  slurp = getProgFor "slurp";
-  grim = getProgFor "grim";
-  wl-copy = getProgFor' "wl-clipboard" "wl-copy";
-  mullvad = getProgFor' "mullvad-vpn" "mullvad-gui";
-  playerctl = getProgFor "playerctl";
-  brightnessctl = getProgFor "brightnessctl";
-  wpctl = getProgFor' "wireplumber" "wpctl";
-  hyprlock = getProgFor "hyprlock";
-  hyprctl = getProgFor' "hyprland" "hyprctl";
-in {
+}:
+let
+  web = lib.getExe pkgs.firefox;
+  chat = lib.getExe pkgs.discord;
+  media = lib.getExe pkgs.spotify;
+  terminal = lib.getExe pkgs.alacritty;
+  runner = lib.getExe pkgs.rofi;
+  rofi-rbw = lib.getExe' pkgs.rofi-rbw-wayland "rofi-rbw";
+  tmux = lib.getExe pkgs.tmux;
+  slurp = lib.getExe pkgs.slurp;
+  grim = lib.getExe pkgs.grim;
+  wl-copy = lib.getExe' pkgs.wl-clipboard "wl-copy";
+  mullvad = lib.getExe' pkgs.mullvad-vpn "mullvad-gui";
+  playerctl = lib.getExe pkgs.playerctl;
+  brightnessctl = lib.getExe pkgs.brightnessctl;
+  wpctl = lib.getExe' pkgs.wireplumber "wpctl";
+  hyprlock = lib.getExe pkgs.hyprlock;
+  hyprctl = lib.getExe' pkgs.hyprland "hyprctl";
+in
+{
   services = {
     blueman-applet.enable = true;
     network-manager-applet.enable = true;
@@ -156,60 +154,64 @@ in {
 
       "$mainMod" = "SUPER";
 
-      bind =
-        [
-          "$mainMod, q, killactive"
-          "$mainMod SHIFT, q, exit"
-          "$mainMod, F, fullscreen"
-          "$mainMod SHIFT, f, togglefloating"
-          "$mainMod, d, exec, ${runner} -show drun"
-          "$mainMod, w, exec, ${runner} -show window"
-          "$mainMod, p, exec, ${rofi-rbw} --no-folder"
-          "$mainMod, s, togglesplit"
-          "$mainMod SHIFT, r, exec, ${hyprctl} reload"
-          "$mainMod, return, exec, ${terminal} -e ${tmux} new -A -s main"
-          "$mainMod SHIFT, return, exec, [float; pin] ${terminal} -e ${tmux} new -A -s main"
+      bind = [
+        "$mainMod, q, killactive"
+        "$mainMod SHIFT, q, exit"
+        "$mainMod, F, fullscreen"
+        "$mainMod SHIFT, f, togglefloating"
+        "$mainMod, d, exec, ${runner} -show drun"
+        "$mainMod, w, exec, ${runner} -show window"
+        "$mainMod, p, exec, ${rofi-rbw} --no-folder"
+        "$mainMod, s, togglesplit"
+        "$mainMod SHIFT, r, exec, ${hyprctl} reload"
+        "$mainMod, return, exec, ${terminal} -e ${tmux} new -A -s main"
+        "$mainMod SHIFT, return, exec, [float; pin] ${terminal} -e ${tmux} new -A -s main"
 
-          "$mainMod, b, workspace, name:web"
-          "$mainMod, n, workspace, name:chat"
-          "$mainMod, m, workspace, name:media"
-          "$mainMod, v, workspace, name:mail"
+        "$mainMod, b, workspace, name:web"
+        "$mainMod, n, workspace, name:chat"
+        "$mainMod, m, workspace, name:media"
+        "$mainMod, v, workspace, name:mail"
 
-          "$mainMod SHIFT, b, movetoworkspace, name:web"
-          "$mainMod SHIFT, n, movetoworkspace, name:chat"
-          "$mainMod SHIFT, m, movetoworkspace, name:media"
-          "$mainMod SHIFT, v, movetoworkspace, name:mail"
+        "$mainMod SHIFT, b, movetoworkspace, name:web"
+        "$mainMod SHIFT, n, movetoworkspace, name:chat"
+        "$mainMod SHIFT, m, movetoworkspace, name:media"
+        "$mainMod SHIFT, v, movetoworkspace, name:mail"
 
-          "$mainMod CTRL, b, moveworkspacetomonitor, name:web current"
-          "$mainMod CTRL, n, moveworkspacetomonitor, name:chat current"
-          "$mainMod CTRL, m, moveworkspacetomonitor, name:media current"
-          "$mainMod CTRL, v, moveworkspacetomonitor, name:mail current"
-          "$mainMod CTRL, b, workspace, name:web"
-          "$mainMod CTRL, n, workspace, name:chat"
-          "$mainMod CTRL, m, workspace, name:media"
-          "$mainMod CTRL, v, workspace, name:mail"
+        "$mainMod CTRL, b, moveworkspacetomonitor, name:web current"
+        "$mainMod CTRL, n, moveworkspacetomonitor, name:chat current"
+        "$mainMod CTRL, m, moveworkspacetomonitor, name:media current"
+        "$mainMod CTRL, v, moveworkspacetomonitor, name:mail current"
+        "$mainMod CTRL, b, workspace, name:web"
+        "$mainMod CTRL, n, workspace, name:chat"
+        "$mainMod CTRL, m, workspace, name:media"
+        "$mainMod CTRL, v, workspace, name:mail"
 
-          "$mainMod, h, movefocus, l"
-          "$mainMod, l, movefocus, r"
-          "$mainMod, k, movefocus, u"
-          "$mainMod, j, movefocus, d"
-          "$mainMod SHIFT, h, movewindow, l"
-          "$mainMod SHIFT, l, movewindow, r"
-          "$mainMod SHIFT, k, movewindow, u"
-          "$mainMod SHIFT, j, movewindow, d"
-          ''SHIFT, Print, exec, ${grim} -g "$(${slurp})" - | ${wl-copy}''
-          ", Print, exec, ${grim} - | ${wl-copy}"
-          "$mainMod, 0, exec, ${hyprlock}"
-        ]
-        ++ (builtins.concatLists (builtins.genList (x: let
+        "$mainMod, h, movefocus, l"
+        "$mainMod, l, movefocus, r"
+        "$mainMod, k, movefocus, u"
+        "$mainMod, j, movefocus, d"
+        "$mainMod SHIFT, h, movewindow, l"
+        "$mainMod SHIFT, l, movewindow, r"
+        "$mainMod SHIFT, k, movewindow, u"
+        "$mainMod SHIFT, j, movewindow, d"
+        ''SHIFT, Print, exec, ${grim} -g "$(${slurp})" - | ${wl-copy}''
+        ", Print, exec, ${grim} - | ${wl-copy}"
+        "$mainMod, 0, exec, ${hyprlock}"
+      ]
+      ++ (builtins.concatLists (
+        builtins.genList (
+          x:
+          let
             ws = x + 1;
-          in [
+          in
+          [
             "$mainMod, ${toString ws}, workspace, ${toString ws}"
             "$mainMod SHIFT, ${toString ws}, movetoworkspace, ${toString ws}"
             "$mainMod CTRL, ${toString ws}, moveworkspacetomonitor, ${toString ws} current"
             "$mainMod CTRL, ${toString ws}, workspace, ${toString ws}"
-          ])
-          9));
+          ]
+        ) 9
+      ));
 
       workspace = [
         "name:web, on-created-empty: ${web}"
@@ -236,7 +238,7 @@ in {
         ", XF86MonBrightnessDown, exec, ${brightnessctl} -c backlight set 5%-"
       ];
 
-      exec-once = [(toString mullvad)];
+      exec-once = [ (toString mullvad) ];
     };
   };
 }

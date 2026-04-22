@@ -1,13 +1,13 @@
 {
   pkgs,
-  cLib,
+  lib,
   ...
-}: let
-  getProgFor = cLib.getProgFor pkgs;
-  tmux = getProgFor "tmux";
-  getProgFor' = cLib.getProgFor pkgs.scenics;
-  tmux-githop = getProgFor' "tmux-githop";
-in {
+}:
+let
+  tmux = lib.getExe pkgs.tmux;
+  tmux-githop = lib.getExe pkgs.scenics.tmux-githop;
+in
+{
   programs.tmux = {
     enable = true;
     shortcut = "x";
@@ -21,7 +21,7 @@ in {
       yank
       {
         plugin = onedark-theme.overrideAttrs (_: {
-          patches = [./bar.patch];
+          patches = [ ./bar.patch ];
         });
         extraConfig = "\n";
       }

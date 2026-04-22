@@ -2,16 +2,13 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   nixpkgs.hostPlatform = "x86_64-linux";
   c.services.mesh = {
     enable = true;
     exitNode = false;
     keyFile = config.age.secrets.mesh-conf-cleslie.path;
-  };
-  c.services.remote-deploy = {
-    enable = false;
-    keys = config.keys.c;
   };
 
   time.timeZone = "Europe/London";
@@ -19,13 +16,19 @@
 
   users.users.c = {
     isNormalUser = true;
-    extraGroups = ["wheel" "networkmanager" "libvirtd" "dialout" "wireshark"];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "libvirtd"
+      "dialout"
+      "wireshark"
+    ];
     openssh.authorizedKeys.keys = config.keys.c;
     shell = pkgs.fish;
-    packages = with pkgs; [];
+    packages = with pkgs; [ ];
   };
 
-  nix.settings.trusted-users = ["c"];
+  nix.settings.trusted-users = [ "c" ];
 
   environment.systemPackages = with pkgs; [
     vim
@@ -44,13 +47,19 @@
   ];
 
   environment = {
-    variables = {EDITOR = "nvim";};
-    sessionVariables = {NIXOS_OZONE_WL = "1";};
+    variables = {
+      EDITOR = "nvim";
+    };
+    sessionVariables = {
+      NIXOS_OZONE_WL = "1";
+    };
 
-    shells = with pkgs; [fish];
+    shells = with pkgs; [ fish ];
   };
 
-  fonts.packages = with pkgs; [meslo-lgs-nf] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
+  fonts.packages =
+    with pkgs;
+    [ meslo-lgs-nf ] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
   services.udev.packages = [
     pkgs.platformio-core.udev
     pkgs.openocd

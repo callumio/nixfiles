@@ -8,32 +8,6 @@
       flake-parts,
       ...
     }@inputs:
-    let
-      cLib = import ./lib { inherit (nixpkgs) lib; };
-      mkLinuxSystem =
-        mod: ovl:
-        nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs cLib; };
-          modules = [
-            inputs.home-manager.nixosModules.home-manager
-            inputs.stylix.nixosModules.stylix
-            inputs.agenix.nixosModules.default
-            {
-              nixpkgs.config.allowUnfree = true;
-              nixpkgs.overlays = [ self.overlays.default ] ++ ovl;
-            }
-            self.nixosModules.nix-config
-            self.nixosModules.boot
-            self.nixosModules.gpg-pinentry-wayland
-            self.nixosModules.keys
-            self.nixosModules.hm
-            self.nixosModules.secrets
-            self.nixosModules.tailscale
-            self.nixosModules.deploy
-          ]
-          ++ mod;
-        };
-    in
     flake-parts.lib.mkFlake { inherit self inputs; } {
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
@@ -43,18 +17,6 @@
       ];
 
       systems = import inputs.systems;
-
-      flake = {
-        # TODO: use ./hosts/
-        nixosConfigurations = {
-          artemis = mkLinuxSystem [ ./hosts/artemis ] [ ];
-          hermes =
-            mkLinuxSystem
-              [ ./hosts/hermes inputs.nocodb.nixosModules.nocodb inputs.copyparty.nixosModules.default ]
-              [ inputs.copyparty.overlays.default ];
-        };
-        diskoConfigurations = { }; # maybe?
-      };
 
       perSystem =
         {

@@ -1,9 +1,9 @@
-{ config, ... }:
+{ config, inputs, ... }:
 {
   flake.nixosModules.profile-graphical = {
     imports = [
-      config.flake.nixosmodules.profile-base
-      config.flake.nixosModules.pinentry-fix-wayland
+      config.flake.nixosModules.profile-base
+      config.flake.nixosModules.gpg-pinentry-wayland
       inputs.stylix.nixosModules.stylix
     ];
   };

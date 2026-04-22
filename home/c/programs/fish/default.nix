@@ -1,14 +1,16 @@
 {
   pkgs,
-  cLib,
+  lib,
   ...
-}: let
+}:
+let
   mkFishPlug = pkg: {
     name = pkg.pname;
     inherit (pkg) src;
   };
-  tmux = cLib.getProgFor pkgs "tmux";
-in {
+  tmux = lib.getExe pkgs.tmux;
+in
+{
   programs.fish = {
     enable = true;
 
@@ -19,7 +21,9 @@ in {
     '';
 
     # TODO: dont use this directly
-    shellAliases = {v = "nvim";};
+    shellAliases = {
+      v = "nvim";
+    };
 
     functions = {
       __trap_exit_tmux = {
