@@ -1,8 +1,10 @@
-_: let
+_:
+let
   domain = "hub.cleslie.uk";
-in {
+in
+{
   services = {
-    cloudflare-dyndns.domains = [domain];
+    cloudflare-dyndns.domains = [ domain ];
     nocodb = {
       enable = true;
       environment = {

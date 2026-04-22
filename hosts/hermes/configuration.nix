@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   nixpkgs.hostPlatform = "x86_64-linux";
   c.services.mesh = {
     enable = true;
@@ -22,7 +23,10 @@
 
   users.users.media = {
     isNormalUser = true;
-    extraGroups = ["wheel" "multimedia"];
+    extraGroups = [
+      "wheel"
+      "multimedia"
+    ];
     openssh.authorizedKeys.keys = config.keys.c;
     packages = with pkgs; [
       tree
@@ -30,7 +34,7 @@
     ];
   };
 
-  nix.settings.trusted-users = ["media"];
+  nix.settings.trusted-users = [ "media" ];
 
   environment.systemPackages = with pkgs; [
     wget

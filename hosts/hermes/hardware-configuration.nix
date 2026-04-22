@@ -3,18 +3,25 @@
   lib,
   modulesPath,
   ...
-}: {
+}:
+{
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
   boot = {
-    initrd.availableKernelModules = ["xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod"];
-    initrd.kernelModules = [];
-    kernelModules = ["kvm-intel"];
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "ahci"
+      "usbhid"
+      "usb_storage"
+      "sd_mod"
+    ];
+    initrd.kernelModules = [ ];
+    kernelModules = [ "kvm-intel" ];
     kernelParams = [
       "i915.enable_guc=2"
     ];
-    extraModulePackages = [];
+    extraModulePackages = [ ];
   };
 
   #boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -27,10 +34,13 @@
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/57CE-8609";
     fsType = "vfat";
-    options = ["fmask=0077" "dmask=0077"];
+    options = [
+      "fmask=0077"
+      "dmask=0077"
+    ];
   };
 
-  swapDevices = [];
+  swapDevices = [ ];
 
   networking.useDHCP = lib.mkDefault true;
 

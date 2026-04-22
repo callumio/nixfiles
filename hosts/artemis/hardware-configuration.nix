@@ -4,14 +4,21 @@
   pkgs,
   modulesPath,
   ...
-}: {
-  imports = [(modulesPath + "/installer/scan/not-detected.nix")];
+}:
+{
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
   zramSwap.enable = true;
   boot = {
-    initrd.availableKernelModules = ["xhci_pci" "thunderbolt" "nvme" "usb_storage" "rtsx_pci_sdmmc"];
-    initrd.kernelModules = [];
-    kernelModules = ["kvm-intel"];
-    extraModulePackages = [];
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "thunderbolt"
+      "nvme"
+      "usb_storage"
+      "rtsx_pci_sdmmc"
+    ];
+    initrd.kernelModules = [ ];
+    kernelModules = [ "kvm-intel" ];
+    extraModulePackages = [ ];
     kernelParams = [
       "i915.enable_psr=0"
       "i915.enable_fbc=0"
@@ -25,7 +32,11 @@
     bluetooth = {
       enable = true;
       powerOnBoot = true;
-      settings = {General = {Enable = "Source,Sink,Media,Socket";};};
+      settings = {
+        General = {
+          Enable = "Source,Sink,Media,Socket";
+        };
+      };
     };
 
     graphics = {
@@ -44,7 +55,9 @@
 
     cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   };
-  environment.sessionVariables = {LIBVA_DRIVER_NAME = "iHD";}; # Force intel-media-driver
+  environment.sessionVariables = {
+    LIBVA_DRIVER_NAME = "iHD";
+  }; # Force intel-media-driver
 
   services = {
     blueman.enable = true;
@@ -68,7 +81,7 @@
     fsType = "ext4";
   };
 
-  swapDevices = [];
+  swapDevices = [ ];
 
   networking.useDHCP = lib.mkDefault true;
 }

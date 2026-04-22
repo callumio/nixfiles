@@ -2,7 +2,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   programs = {
     wireshark.enable = true;
     fish.enable = true;
@@ -30,7 +31,11 @@
         #   theme_name = "Adwaita";
         # };
       };
-      cageArgs = ["-s" "-m" "last"];
+      cageArgs = [
+        "-s"
+        "-m"
+        "last"
+      ];
     };
   };
   services = {

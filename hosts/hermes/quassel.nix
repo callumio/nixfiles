@@ -1,6 +1,7 @@
-{...}: {
+{ ... }:
+{
   services.quassel = {
     enable = true;
-    interfaces = ["0.0.0.0"];
+    interfaces = [ "0.0.0.0" ];
   };
 }

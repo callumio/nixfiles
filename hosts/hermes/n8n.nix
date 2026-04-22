@@ -1,8 +1,10 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   domain = "automation.cleslie.uk";
-in {
+in
+{
   services = {
-    cloudflare-dyndns.domains = [domain];
+    cloudflare-dyndns.domains = [ domain ];
     n8n = {
       enable = true;
       environment = {
@@ -14,5 +16,5 @@ in {
       reverse_proxy http://127.0.0.1:5678
     '';
   };
-  environment.systemPackages = with pkgs; [mupdf-headless];
+  environment.systemPackages = with pkgs; [ mupdf-headless ];
 }

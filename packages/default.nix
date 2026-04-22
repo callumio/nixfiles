@@ -2,13 +2,14 @@
   pkgs,
   inputs,
   inputs',
-}: {
-  tmux-sessionizer-cl = pkgs.callPackage ./tmux-sessionizer {};
+}:
+{
+  tmux-sessionizer-cl = pkgs.callPackage ./tmux-sessionizer { };
   om = inputs'.omnix.packages.default;
   nvf = inputs'.nvf.packages.default;
   agenix = inputs'.agenix.packages.default;
-  vaapiIntel = pkgs.intel-vaapi-driver.override {enableHybridCodec = true;};
-  devour-flake = pkgs.callPackage inputs.devour-flake {};
+  vaapiIntel = pkgs.intel-vaapi-driver.override { enableHybridCodec = true; };
+  devour-flake = pkgs.callPackage inputs.devour-flake { };
   nish = inputs'.nish.packages.default;
   nsbm = inputs'.nsbm.packages.default;
   jellyfin-ffmpeg = pkgs.jellyfin-ffmpeg.override {

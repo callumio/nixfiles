@@ -1,4 +1,5 @@
-{inputs, ...}: {
+{ inputs, ... }:
+{
   programs.firefox = {
     enable = true;
     policies = {
@@ -37,9 +38,9 @@
         ];
       };
 
-      containers = {};
+      containers = { };
 
-      settings = {};
+      settings = { };
 
       userChrome = "";
 

@@ -1,6 +1,8 @@
-{config, ...}: let
+{ config, ... }:
+let
   domain = "mesh.cleslie.uk";
-in {
+in
+{
   services = {
     headscale = {
       enable = true;
@@ -16,7 +18,7 @@ in {
         ip_prefixes = "100.64.0.0/10";
       };
     };
-    cloudflare-dyndns.domains = [domain];
+    cloudflare-dyndns.domains = [ domain ];
     caddy.virtualHosts.${domain}.extraConfig = ''
       reverse_proxy localhost:${toString config.services.headscale.port}
     '';

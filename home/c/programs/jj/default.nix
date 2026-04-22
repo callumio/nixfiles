@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   programs.jujutsu = {
     enable = true;
     settings = {
@@ -21,13 +22,13 @@
 
       "--scope" = [
         {
-          "--when".repositories = ["~/repos/projects.cs.nott.ac.uk"];
+          "--when".repositories = [ "~/repos/projects.cs.nott.ac.uk" ];
           user = {
             email = "psycl6@nottingham.ac.uk";
           };
         }
         {
-          "--when".commands = ["status"];
+          "--when".commands = [ "status" ];
           ui.paginate = "never";
         }
       ];

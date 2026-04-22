@@ -1,13 +1,15 @@
-{config, ...}: let
+{ config, ... }:
+let
   domain = "files.cleslie.uk";
-in {
+in
+{
   services = {
-    cloudflare-dyndns.domains = [domain];
+    cloudflare-dyndns.domains = [ domain ];
     copyparty = {
       enable = true;
       settings = {
         i = "127.0.0.1";
-        p = [3210];
+        p = [ 3210 ];
       };
       accounts = {
         c.passwordFile = config.age.secrets.copyparty-c.path;
@@ -16,13 +18,13 @@ in {
         "/media" = {
           path = "/var/lib/media/library";
           access = {
-            rw = ["c"];
+            rw = [ "c" ];
           };
         };
         "/paperless" = {
           path = "/var/lib/paperless";
           access = {
-            rw = ["c"];
+            rw = [ "c" ];
           };
         };
       };

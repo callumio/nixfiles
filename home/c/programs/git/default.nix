@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   programs = {
     git = {
       enable = true;
@@ -8,7 +9,7 @@
       signing.key = "03B01F427831BCFD!";
       signing.signByDefault = true;
 
-      ignores = [".direnv/"];
+      ignores = [ ".direnv/" ];
 
       includes = [
         {
@@ -18,7 +19,9 @@
               email = "psycl6@nottingham.ac.uk";
               signingKey = "14861F1282EFB5C8!";
             };
-            credential = {helper = "store";};
+            credential = {
+              helper = "store";
+            };
           };
         }
       ];
@@ -29,10 +32,16 @@
           autocrlf = false;
         };
 
-        init = {defaultBranch = "main";};
+        init = {
+          defaultBranch = "main";
+        };
 
-        push = {autoSetupRemote = true;};
-        ghq = {root = "~/repos";};
+        push = {
+          autoSetupRemote = true;
+        };
+        ghq = {
+          root = "~/repos";
+        };
       };
     };
     delta.enable = true;

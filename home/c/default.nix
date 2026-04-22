@@ -1,5 +1,9 @@
-{pkgs, ...}: {
-  imports = [./programs ./services];
+{ pkgs, ... }:
+{
+  imports = [
+    ./programs
+    ./services
+  ];
 
   programs.home-manager.enable = true;
   services.trayscale.enable = true;

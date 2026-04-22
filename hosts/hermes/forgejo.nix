@@ -2,11 +2,13 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   domain = "git.cleslie.uk";
-in {
+in
+{
   services = {
-    cloudflare-dyndns.domains = [domain];
+    cloudflare-dyndns.domains = [ domain ];
     forgejo = {
       enable = true;
       database.type = "postgres";

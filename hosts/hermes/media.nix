@@ -1,10 +1,14 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   mediaDir = "/var/lib/media";
-in {
+in
+{
   users = {
-    groups.multimedia = {gid = 994;};
-    users."root".extraGroups = ["multimedia"];
-    users."media".extraGroups = ["multimedia"];
+    groups.multimedia = {
+      gid = 994;
+    };
+    users."root".extraGroups = [ "multimedia" ];
+    users."media".extraGroups = [ "multimedia" ];
   };
 
   systemd.tmpfiles.rules = [
@@ -87,7 +91,11 @@ in {
       };
     };
 
-    cloudflare-dyndns.domains = ["media.cleslie.uk" "watch.cleslie.uk" "request.cleslie.uk"];
+    cloudflare-dyndns.domains = [
+      "media.cleslie.uk"
+      "watch.cleslie.uk"
+      "request.cleslie.uk"
+    ];
 
     jellyfin = {
       enable = true;
@@ -126,7 +134,7 @@ in {
       dataDir = "${mediaDir}/torrents";
       declarative = true;
       config = {
-        enabled_plugins = ["Label"];
+        enabled_plugins = [ "Label" ];
         outgoing_interface = "wg1";
         allow_remote = true;
         openFirewall = false;

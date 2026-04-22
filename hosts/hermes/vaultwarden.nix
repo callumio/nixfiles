@@ -1,8 +1,10 @@
-{config, ...}: let
+{ config, ... }:
+let
   domain = "vaultwarden.cleslie.uk";
-in {
+in
+{
   services = {
-    cloudflare-dyndns.domains = [domain];
+    cloudflare-dyndns.domains = [ domain ];
     vaultwarden = {
       enable = true;
       dbBackend = "sqlite";

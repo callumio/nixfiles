@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   virtualisation = {
     podman.enable = true;
     podman.dockerCompat = true;
@@ -9,7 +10,7 @@
         #image = "ghcr.io/flaresolverr/flaresolverr:pr-1282";
         image = "docker.io/alexfozor/flaresolverr:pr-1300-experimental";
         autoStart = true;
-        ports = ["127.0.0.1:8191:8191"];
+        ports = [ "127.0.0.1:8191:8191" ];
         environment = {
           LOG_LEVEL = "debug";
         };
@@ -17,7 +18,10 @@
       tdarr = {
         image = "ghcr.io/haveagitgat/tdarr";
         autoStart = true;
-        ports = ["0.0.0.0:8265:8265" "127.0.0.1:8266:8266"];
+        ports = [
+          "0.0.0.0:8265:8265"
+          "127.0.0.1:8266:8266"
+        ];
         volumes = [
           "/var/lib/tdarr/server:/app/server"
           "/var/lib/tdarr/configs:/app/configs"
@@ -37,7 +41,10 @@
           PUID = "1000";
           PGID = "994";
         };
-        extraOptions = ["--device=/dev/dri:/dev/dri" "--network=bridge"];
+        extraOptions = [
+          "--device=/dev/dri:/dev/dri"
+          "--network=bridge"
+        ];
       };
     };
   };

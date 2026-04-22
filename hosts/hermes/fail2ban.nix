@@ -1,8 +1,11 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   services.fail2ban = {
     enable = true;
     jails = {
-      sshd.settings = {enabled = false;};
+      sshd.settings = {
+        enabled = false;
+      };
       radarr.settings = {
         enabled = true;
         filter = "arr";
@@ -74,33 +77,39 @@
     };
   };
   environment.etc = {
-    "fail2ban/filter.d/arr.local".text = pkgs.lib.mkDefault (pkgs.lib.mkAfter ''
-      [INCLUDES]
-      before = common.conf
+    "fail2ban/filter.d/arr.local".text = pkgs.lib.mkDefault (
+      pkgs.lib.mkAfter ''
+        [INCLUDES]
+        before = common.conf
 
-      [Definition]
-      datepattern = ^%%Y-%%m-%%d %%H:%%M:%%S\.%%f\|
-      failregex = ^\s*Warn\|Auth\|Auth-Failure ip <ADDR> username '<F-USER>[^']+</F-USER>'
-      ignoreregex =
-    '');
+        [Definition]
+        datepattern = ^%%Y-%%m-%%d %%H:%%M:%%S\.%%f\|
+        failregex = ^\s*Warn\|Auth\|Auth-Failure ip <ADDR> username '<F-USER>[^']+</F-USER>'
+        ignoreregex =
+      ''
+    );
 
-    "fail2ban/filter.d/jellyseerr.local".text = pkgs.lib.mkDefault (pkgs.lib.mkAfter ''
-      [INCLUDES]
-      before = common.conf
+    "fail2ban/filter.d/jellyseerr.local".text = pkgs.lib.mkDefault (
+      pkgs.lib.mkAfter ''
+        [INCLUDES]
+        before = common.conf
 
-      [Definition]
-      failregex = ^.*\[warn\]\[API\]: Failed sign-in attempt using invalid Overseerr password {"ip":"<HOST>","email":
-                  ^.*\[warn\]\[Auth\]: Failed login attempt from user with incorrect Jellyfin credentials {"account":{"ip":"<HOST>","email":
-      ignoreregex =
-    '');
+        [Definition]
+        failregex = ^.*\[warn\]\[API\]: Failed sign-in attempt using invalid Overseerr password {"ip":"<HOST>","email":
+                    ^.*\[warn\]\[Auth\]: Failed login attempt from user with incorrect Jellyfin credentials {"account":{"ip":"<HOST>","email":
+        ignoreregex =
+      ''
+    );
 
-    "fail2ban/filter.d/jellyfin.local".text = pkgs.lib.mkDefault (pkgs.lib.mkAfter ''
-      [INCLUDES]
-      before = common.conf
+    "fail2ban/filter.d/jellyfin.local".text = pkgs.lib.mkDefault (
+      pkgs.lib.mkAfter ''
+        [INCLUDES]
+        before = common.conf
 
-      [Definition]
-      failregex = ^.*Authentication request for .* has been denied \(IP: "<ADDR>"\)\.
-      ignoreregex =
-    '');
+        [Definition]
+        failregex = ^.*Authentication request for .* has been denied \(IP: "<ADDR>"\)\.
+        ignoreregex =
+      ''
+    );
   };
 }
