@@ -1,13 +1,17 @@
-{...}: {
-  flake.nixosModules.deploy = {
-    config,
-    pkgs,
-    lib,
-    ...
-  }:
-    with lib; let
+{ ... }:
+{
+  flake.nixosModules.deploy =
+    {
+      config,
+      pkgs,
+      lib,
+      ...
+    }:
+    with lib;
+    let
       cfg = config.c.services.remote-deploy;
-    in {
+    in
+    {
       options.c.services.remote-deploy = {
         enable = mkEnableOption "Enable remote deployment with nixinate.";
         host = mkOption {
@@ -50,8 +54,7 @@
       config = mkIf cfg.enable {
         _module.args = {
           nixinate = {
-            inherit
-              (cfg)
+            inherit (cfg)
               host
               buildOn
               port
@@ -60,21 +63,21 @@
             sshUser = cfg.user;
           };
         };
-        users.groups."${cfg.group}" = {};
+        users.groups."${cfg.group}" = { };
         users.users."${cfg.user}" = {
           isSystemUser = true;
           shell = pkgs.bash;
           inherit (cfg) group;
           openssh.authorizedKeys.keys = cfg.keys;
         };
-        nix.settings.trusted-users = [cfg.user];
+        nix.settings.trusted-users = [ cfg.user ];
         security.sudo.extraRules = [
           {
-            groups = [cfg.group];
+            groups = [ cfg.group ];
             commands = [
               {
                 command = "ALL";
-                options = ["NOPASSWD"];
+                options = [ "NOPASSWD" ];
               }
             ];
           }

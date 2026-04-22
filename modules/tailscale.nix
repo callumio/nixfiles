@@ -1,12 +1,16 @@
-{...}: {
-  flake.nixosModules.tailscale = {
-    config,
-    lib,
-    ...
-  }:
-    with lib; let
+{ ... }:
+{
+  flake.nixosModules.tailscale =
+    {
+      config,
+      lib,
+      ...
+    }:
+    with lib;
+    let
       cfg = config.c.services.mesh;
-    in {
+    in
+    {
       options.c.services.mesh = {
         enable = mkEnableOption "Enable tailscale daemon.";
         exitNode = mkOption {
@@ -28,10 +32,10 @@
             "--login-server"
             "https://mesh.cleslie.uk"
           ];
-          extraSetFlags = [(mkIf cfg.exitNode "--advertise-exit-node")];
+          extraSetFlags = [ (mkIf cfg.exitNode "--advertise-exit-node") ];
         };
         networking.firewall = {
-          trustedInterfaces = [config.services.tailscale.interfaceName];
+          trustedInterfaces = [ config.services.tailscale.interfaceName ];
         };
       };
     };

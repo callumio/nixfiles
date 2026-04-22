@@ -1,4 +1,5 @@
-{inputs, ...}: {
+{ inputs, ... }:
+{
   flake.nixosModules.nix-config = {
     nix = {
       registry.nixpkgs.flake = inputs.nixpkgs;

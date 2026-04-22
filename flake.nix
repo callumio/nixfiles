@@ -39,7 +39,7 @@
         inputs.flake-parts.flakeModules.easyOverlay
         inputs.pre-commit-hooks.flakeModule
         inputs.treefmt-nix.flakeModule
-        (inputs.import-tree ./tree)
+        (inputs.import-tree ./modules)
       ];
 
       systems = import inputs.systems;
