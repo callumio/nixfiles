@@ -113,11 +113,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -152,15 +147,6 @@
       };
     };
 
-    nsbm = {
-      url = "github:callumio/nsbm";
-      inputs = {
-        nixpkgs.follows = "unstable";
-        treefmt-nix.follows = "treefmt-nix";
-        flake-parts.follows = "flake-parts";
-        systems.follows = "systems";
-      };
-    };
     copyparty = {
       url = "github:9001/copyparty";
       inputs.nixpkgs.follows = "unstable";
@@ -172,5 +158,10 @@
     };
 
     import-tree.url = "github:vic/import-tree";
+
+    nix-wrapper-modules = {
+      url = "github:BirdeeHub/nix-wrapper-modules";
+      inputs.nixpkgs.follows = "unstable";
+    };
   };
 }

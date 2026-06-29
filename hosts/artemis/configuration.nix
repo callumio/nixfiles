@@ -43,7 +43,6 @@
     pkg-config
     sbctl
     nish
-    nsbm
   ];
 
   environment = {

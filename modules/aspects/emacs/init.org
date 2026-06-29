@@ -1,0 +1,366 @@
+#+TITLE: C's Emacs Config
+#+PROPERTY: header-args:emacs-lisp :lexical t
+
+* Core
+#+begin_src emacs-lisp
+(setq inhibit-startup-message t
+      ring-bell-function 'ignore
+      make-backup-files nil
+      auto-save-default nil
+      display-line-numbers-type 'relative
+      sentence-end-double-space nil
+      require-final-newline t
+      truncate-lines t
+      use-short-answers t
+      jit-lock-defer-time 0
+      fast-but-imprecise-scrolling nil
+      jit-lock-stealth-time 1
+      jit-lock-stealth-nice 0.1
+      scroll-margin 8
+      scroll-conservatively 101)
+
+(setq-default tab-width 2
+              indent-tabs-mode nil)
+
+(xterm-mouse-mode 1)
+(global-display-line-numbers-mode)
+(electric-pair-mode)
+(use-package envrc
+  :hook (after-init . envrc-global-mode))
+#+end_src
+
+* Org
+#+begin_src emacs-lisp
+(use-package org
+  :custom
+  (org-src-fontify-natively t)
+  (org-src-tab-acts-natively t)
+  (org-edit-src-content-indentation 0)
+  (org-src-preserve-indentation t)
+  :hook (org-mode . (lambda ()
+                      (display-line-numbers-mode -1)
+                      (variable-pitch-mode 1)))
+  :config
+  (custom-theme-set-faces 'user
+    '(org-block    ((t (:inherit fixed-pitch))))
+    '(org-code     ((t (:inherit fixed-pitch))))
+    '(org-table    ((t (:inherit fixed-pitch))))
+    '(org-verbatim ((t (:inherit fixed-pitch))))))
+
+(use-package org-modern
+  :config (global-org-modern-mode))
+#+end_src
+
+* Evil
+#+begin_src emacs-lisp
+(use-package evil
+  :init
+  (setq evil-want-integration t
+        evil-want-keybinding nil
+        evil-want-C-u-scroll t
+        evil-want-C-i-jump t
+        evil-undo-system 'undo-redo
+        evil-vsplit-window-right t
+        evil-split-window-below t)
+  :config (evil-mode 1))
+
+(use-package evil-collection
+  :after evil
+  :config (evil-collection-init))
+
+(use-package evil-surround
+  :after evil
+  :config (global-evil-surround-mode 1))
+
+(use-package evil-commentary
+  :after evil
+  :config (evil-commentary-mode))
+#+end_src
+
+* Completion
+#+begin_src emacs-lisp
+(use-package vertico
+  :config (vertico-mode))
+
+(use-package orderless
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion))))
+  (orderless-component-separator "[ /]")
+  (orderless-matching-styles
+   '(orderless-literal
+     orderless-regexp
+     orderless-initialism
+     orderless-flex)))
+
+(use-package marginalia
+  :config (marginalia-mode))
+
+(use-package consult
+  :custom
+  (consult-project-function #'consult--default-project-function)
+  (consult-narrow-key "<"))
+
+(use-package nerd-icons-completion
+  :after marginalia
+  :config (nerd-icons-completion-mode))
+
+(use-package corfu
+  :custom
+  (corfu-auto t)
+  (corfu-cycle t)
+  :config (global-corfu-mode))
+
+(use-package cape
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
+#+end_src
+
+* UI
+#+begin_src emacs-lisp
+(use-package which-key
+  :config (which-key-mode))
+
+(use-package doom-themes
+  :config (load-theme 'doom-one t))
+
+(use-package mood-line
+  :config (mood-line-mode))
+
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+(use-package indent-bars
+  :hook (prog-mode . indent-bars-mode))
+
+(use-package tab-bar
+  :custom
+  (tab-bar-mode)
+  (tab-bar-show 1)
+  (tab-bar-new-tab-choice "*scratch")
+  (tab-bar-close-button-show nil)
+  (tab-bar-new-button-show nil))
+
+#+end_src
+
+* Files
+#+begin_src emacs-lisp
+(use-package dirvish
+  :custom
+  (dirvish-quick-access-entries
+   '(("h" "~/"          "Home")
+     ("d" "~/Downloads" "Downloads")))
+  :config (dirvish-override-dired-mode))
+(use-package project
+  :custom
+  (project-switch-commands
+   '((project-find-file    "Find file"    ?f)
+     (consult-ripgrep      "Search"       ?g)
+     (project-dired        "Dired"        ?d)
+     (magit-project-status "Magit"        ?m)
+     (project-eshell       "Eshell"       ?e))))
+#+end_src
+
+* Activities
+#+begin_src emacs-lisp
+(use-package activities
+  :init (activities-mode)
+  :config (activities-tabs-mode)
+  :custom
+  (activities-bookmark-store t)
+  (activities-kill-buffers t)
+   (activities-anti-save-predicates
+   '(minibufferp
+     (lambda () (string-match-p "^\\*scratch\\*" (buffer-name)))
+     (lambda () (string-match-p "^\\*Messages\\*" (buffer-name)))
+     (lambda () (string-match-p "^\\*Help\\*" (buffer-name)))
+     (lambda () (string-match-p "^ " (buffer-name)))))) 
+
+(defun my/project-switch-activity ()
+  "Switch to a project, resuming its activity or creating one."
+  (interactive)
+  (let* ((project (project-prompt-project-dir))
+         (path (expand-file-name project))
+         (name (file-name-nondirectory (directory-file-name path)))
+         (existing (alist-get name activities-activities nil nil #'equal)))
+    (if existing
+        (activities-resume existing :resetp nil)
+      (let ((default-directory path))
+        (activities-new name)
+        (project-switch-project path)))))
+#+end_src
+
+* LSP
+#+begin_src emacs-lisp
+(use-package rust-mode
+  :init
+  (setq rust-mode-treesitter-derive t)
+  :custom
+  (rust-format-on-save nil)
+  (rust-format-show-buffer nil)
+  (rust-format-goto-problem nil))
+(use-package eglot
+  :custom
+  (eglot-autoshutdown t)
+  (eglot-confirm-server-edits nil)
+  :hook
+  ((rust-mode rust-ts-mode
+    c-mode    c-ts-mode
+    c++-mode  c++-ts-mode
+    python-mode python-ts-mode
+    go-mode   go-ts-mode
+    nix-mode  nix-ts-mode) . eglot-ensure)
+  (eglot-managed-mode . eglot-inlay-hints-mode)
+  (eglot-managed-mode . (lambda ()
+                            (add-hook 'before-save-hook #'eglot-format-buffer nil t))))
+
+(use-package eglot-booster
+  :after eglot
+  :config (eglot-booster-mode))
+
+(use-package eldoc-box
+  :after eglot
+  :custom
+  (eldoc-echo-area-prefer-doc-buffer 'maybe)
+  (eldoc-echo-area-use-multiline-p nil)
+  (eldoc-message-function #'ignore))
+
+(eldoc-mode -1)
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (add-hook 'before-save-hook #'delete-trailing-whitespace nil t)))
+
+(add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-ts-mode))
+(add-to-list 'auto-mode-alist '("/\\(?:Docker\\|Container\\)file\\(?:\\..*\\)?\\'" . dockerfile-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.dockerfile\\'" . dockerfile-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.containerfile\\'" . dockerfile-ts-mode))
+#+end_src
+
+* Diagnostics
+#+begin_src emacs-lisp
+(use-package flyover
+  :hook (flymake-mode . flyover-mode)
+  :custom
+  (flyover-levels '(error warning info))
+  (flyover-use-theme-colors t)
+  (flyover-background-lightness 45)
+  (flyover-checkers '(flymake))
+  (flyover-wrap-messages t)
+  (flyover-max-line-length 80)
+  (flyover-info-icon "")
+  (flyover-warning-icon "")
+  (flyover-error-icon "")
+  (flyover-virtual-line-type 'straight-arrow)
+  (flyover-show-virtual-line t)
+  (flyover-hide-checker-name t))
+#+end_src
+
+* Git
+#+begin_src emacs-lisp
+(use-package magit)
+
+(use-package diff-hl
+  :config
+  (global-diff-hl-mode)
+  (diff-hl-flydiff-mode)
+  :hook
+  (magit-pre-refresh  . diff-hl-magit-pre-refresh)
+  (magit-post-refresh . diff-hl-magit-post-refresh))
+#+end_src
+
+* Keybinds
+#+begin_src emacs-lisp
+(use-package general
+  :config
+  (general-create-definer leader
+    :states '(normal visual)
+    :keymaps 'override
+    :prefix "SPC")
+
+  (general-define-key
+    :states 'normal
+    :keymaps 'override
+    "gd" 'xref-find-definitions
+    "gD" 'xref-find-declarations
+    "gr" 'xref-find-references
+    "K"  (lambda () (interactive) (eldoc nil) (eldoc-box-help-at-point)))
+
+  (leader
+    "SPC" '(project-find-file            :which-key "find file in project")
+    "."   '(find-file                    :which-key "find file")
+    ":"   '(execute-extended-command     :which-key "M-x")
+
+    ;; buffers
+    "b"   '(:ignore t :which-key "buffer")
+    "bb"  '(consult-project-buffer       :which-key "project buffers")
+    "bB"  '(consult-buffer               :which-key "all buffers")
+    "bd"  '(kill-this-buffer             :which-key "kill")
+    "bn"  '(next-buffer                  :which-key "next")
+    "bp"  '(previous-buffer              :which-key "prev")
+
+    ;; files
+    "f"   '(:ignore t :which-key "file")
+    "ff"  '(project-find-file            :which-key "find file (project)")
+    "fF"  '(find-file                    :which-key "find file")
+    "fr"  '(consult-recent-file          :which-key "recent")
+    "fs"  '(save-buffer                  :which-key "save")
+    "-"   '(dirvish-dwim                 :which-key "dirvish")
+
+    ;; project
+    "p"   '(:ignore t :which-key "project")
+    "pp"  '(my/project-switch-activity       :which-key "switch")
+    "pf"  '(project-find-file            :which-key "find file")
+    "pb"  '(consult-project-buffer       :which-key "buffers")
+    "pd"  '(project-dired                :which-key "dired")
+    "pe"  '(project-eshell               :which-key "eshell")
+    "pk"  '(project-kill-buffers         :which-key "kill buffers")
+    "pc"  '(project-compile              :which-key "compile")
+
+    ;; activities
+    "a"  '(:ignore t :which-key "activity")
+    "aa" '(activities-resume          :which-key "resume")
+    "as" '(activities-suspend         :which-key "suspend")
+    "ak" '(activities-kill            :which-key "kill")
+    "al" '(activities-list            :which-key "list")
+    "ar" '(activities-revert          :which-key "revert")
+    "aS" '(activities-save            :which-key "save")
+
+    ;; tabs
+    "TAB" '(:ignore t :which-key "tab")
+    "TAB TAB" '(tab-switch       :which-key "switch")
+    "TAB l" '(tab-next           :which-key "next")
+    "TAB h" '(tab-previous       :which-key "prev")
+    "TAB n" '(my/project-switch-activity :which-key "new")
+    "TAB d" '(activities-suspend :which-key "close")
+
+    ;; search
+    "s"   '(:ignore t :which-key "search")
+    "ss"  '(consult-line                 :which-key "buffer")
+    "sp"  '(consult-ripgrep              :which-key "project")
+    "si"  '(consult-imenu                :which-key "symbol")
+
+    ;; git
+    "g"   '(:ignore t :which-key "git")
+    "gg"  '(magit-status                 :which-key "status")
+    "gb"  '(magit-blame                  :which-key "blame")
+
+    ;; code (LSP)
+    "c"   '(:ignore t :which-key "code")
+    "cf"  '(eglot-format-buffer          :which-key "format")
+    "cr"  '(eglot-rename                 :which-key "rename")
+    "ca"  '(eglot-code-actions           :which-key "actions")
+    "cd"  '(consult-flymake              :which-key "diagnostics")
+
+    ;; window
+    "w"   '(:ignore t :which-key "window")
+    "wv"  '(split-window-right           :which-key "vsplit")
+    "ws"  '(split-window-below           :which-key "hsplit")
+    "wd"  '(delete-window                :which-key "close")
+    "wo"  '(delete-other-windows         :which-key "only")
+
+    ;; quit
+    "q"   '(:ignore t :which-key "quit")
+    "qq"  '(save-buffers-kill-emacs      :which-key "save and quit")
+    "qQ"  '(kill-emacs                   :which-key "force quit")))
+#+end_src
