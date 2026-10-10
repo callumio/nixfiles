@@ -3,8 +3,8 @@
   perSystem =
     { inputs', ... }:
     let
-      # pkgs' = pkgs.unstable;
       pkgs' = inputs'.unstable.legacyPackages;
+      # pkgs' = inputs'.nixpkgs.legacyPackages;
       tangledConfig = pkgs'.runCommand "init.el" { buildInputs = [ pkgs'.emacs-nox ]; } ''
         emacs --batch \
           --eval "(require 'ob-tangle)" \
@@ -68,7 +68,7 @@
             ))
           ];
 
-        extraPackages = with pkgs'; [
+        runtimePkgs = with pkgs'; [
           fd
           ripgrep
           nixfmt

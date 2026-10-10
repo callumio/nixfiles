@@ -4,8 +4,6 @@
     git = {
       enable = true;
 
-      userName = "Callum Leslie";
-      userEmail = "git@cleslie.uk";
       signing.key = "03B01F427831BCFD!";
       signing.signByDefault = true;
 
@@ -26,7 +24,12 @@
         }
       ];
 
-      extraConfig = {
+      settings = {
+        user = {
+          name = "Callum Leslie";
+          email = "git@cleslie.uk";
+        };
+
         core = {
           longpaths = true;
           autocrlf = false;
